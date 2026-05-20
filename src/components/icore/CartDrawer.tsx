@@ -1,21 +1,7 @@
 import { motion } from "framer-motion";
-
-type CartItem = {
-  id: string;
-  title: string;
-  label: string;
-  price: number;
-  quantity: number;
-  source: string;
-};
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  }).format(value);
-}
+import { useNavigate } from "react-router-dom";
+import { formatCurrency } from "@/lib/currency";
+import type { CartItem } from "@/types/cart";
 
 export function CartDrawer({
   open,
@@ -32,9 +18,16 @@ export function CartDrawer({
   onIncreaseQuantity: (id: string) => void;
   onDecreaseQuantity: (id: string) => void;
 }) {
+  const navigate = useNavigate();
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const gst = subtotal * 0.18;
+  const gst = Math.round(subtotal * 0.18);
   const total = subtotal + gst;
+
+  const handleProceed = () => {
+    if (items.length === 0) return;
+    onClose();
+    navigate("/checkout");
+  };
 
   return (
     <motion.aside
@@ -145,14 +138,14 @@ export function CartDrawer({
           <p className="mt-3 text-xs text-[var(--ivory)]/60 leading-relaxed">
             Your reservation totals update instantly. Proceed when you are ready to pay.
           </p>
-          <a
-            href="https://vijay-portfolio-53wi.vercel.app/?utm_source=chatgpt.com"
-            target="_blank"
-            rel="noreferrer"
-            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--gold)] px-5 py-4 text-xs uppercase tracking-[0.35em] text-[var(--burgundy-deep)] shadow-gold transition hover:bg-[var(--gold-soft)]"
+          <button
+            type="button"
+            onClick={handleProceed}
+            disabled={items.length === 0}
+            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--gold)] px-5 py-4 text-xs uppercase tracking-[0.35em] text-[var(--burgundy-deep)] shadow-gold transition hover:bg-[var(--gold-soft)] disabled:cursor-not-allowed disabled:opacity-50"
           >
             Proceed to Payment
-          </a>
+          </button>
         </div>
       </div>
     </motion.aside>
