@@ -101,14 +101,14 @@ export function CoreStory() {
             title: "Osseointegration",
             tag: "Branemark Legacy",
             desc: "The classical paradigm — biological bonding of titanium with cortical & cancellous bone, refined over 50 years of academic rigor.",
-            image: "/images/osseointegration.png",
+            image: "/images/corticobasal-implantology.png",
             imageAlt: "Osseointegration — classical implantology paradigm",
           },
           {
             title: "Corticobasal Implantology",
             tag: "Immediate Function",
             desc: "The contemporary paradigm — engaging dense cortical plates for immediate loading, full-arch rehabilitation, and faster return to function.",
-            image: "/images/corticobasal-implantology.png",
+            image: "/images/osseointegration.png",
             imageAlt: "Corticobasal implantology — immediate function paradigm",
           },
         ].map((s, i) => (
@@ -445,7 +445,7 @@ export function MedicalPanel() {
       t: "Nuclear Medicine",
       d: "Dr. Shubham Dadhich",
       q: "MBBS · MD NUCLEAR MEDICINE",
-      f: ["Consent counseling", "Long-term satisfaction", "Outcome perception"],
+      f: ["Consent counseling", "Short-term satisfaction", "Outcome perception"],
       image: img("shubham-dadhich.jpeg"),
     },
     {
@@ -559,6 +559,7 @@ export function Venue() {
     { t: "Mega OT", d: "6 surgical chairs · Live broadcast · Sterile zones", n: "02" },
     { t: "War Room", d: "Case planning · CBCT review · Mentor pods", n: "03" },
     { t: "Food Court", d: "Royal Rajasthani cuisine · Networking lounges", n: "04" },
+    { t: "Trade Fair", d: "Premium exhibitors • Live product demos • Innovation showcase", n: "05" },
   ];
   return (
     <SectionShell id="venue" label="The Ground" title="Venue · SIAM Institute , Jaipur" dark>
@@ -699,7 +700,7 @@ export function AddOns({ onReserve }: { onReserve: (item: CartItemPayload) => vo
 export function Jaipur() {
   const places = [
     { img: "/images/hawa-mahal.jpg", t: "Hawa Mahal", d: "The Palace of Winds — 953 jharokha windows in pink sandstone." },
-    { img: "/images/amber-fort.jpg", t: "Amber Fort", d: "Hilltop fortress where Rajput valor meets Mughal artistry." },
+    { img: "/images/Amber_fort2.jpg", t: "Amber Fort", d: "Hilltop fortress where Rajput valor meets Mughal artistry." },
     { img: "/images/city-palace.jpg", t: "City Palace", d: "The royal residence — courtyards, museums, and living heritage." },
   ];
   return (
