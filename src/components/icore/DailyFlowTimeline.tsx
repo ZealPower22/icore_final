@@ -146,7 +146,9 @@ export function DailyFlowTimeline({
           <h4 className="mt-2 font-display text-xl md:text-2xl text-[var(--ivory)] tracking-wide">
             {dayLabel}
           </h4>
-          <p className="mt-1 font-serif text-sm md:text-base italic text-[var(--ivory)]/60">{dayTitle}</p>
+          <p className="mt-1 font-serif text-sm md:text-base italic text-[var(--ivory)]/60">
+            {dayTitle}
+          </p>
           <div className="gold-divider mx-auto mt-4 max-w-xs" />
         </header>
 

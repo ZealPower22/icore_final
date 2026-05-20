@@ -18,7 +18,11 @@ export function Hero() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
 
   return (
-    <section id="top" ref={ref} className="relative min-h-screen w-full overflow-hidden bg-[var(--burgundy-deep)]">
+    <section
+      id="top"
+      ref={ref}
+      className="relative min-h-screen w-full overflow-hidden bg-[var(--burgundy-deep)]"
+    >
       {/* Parallax palace */}
       <motion.div style={{ y, scale }} className="absolute inset-0">
         <img
@@ -38,13 +42,15 @@ export function Hero() {
       <div
         className="absolute inset-0 opacity-[0.06] mix-blend-overlay pointer-events-none"
         style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, var(--gold) 1px, transparent 0)",
+          backgroundImage: "radial-gradient(circle at 1px 1px, var(--gold) 1px, transparent 0)",
           backgroundSize: "32px 32px",
         }}
       />
 
-      <motion.div style={{ opacity }} className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 pt-32 pb-20 text-center">
+      <motion.div
+        style={{ opacity }}
+        className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 pt-32 pb-20 text-center"
+      >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -116,7 +122,10 @@ export function Hero() {
           className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-px max-w-5xl w-full glass ornament-frame"
         >
           {stats.map((s) => (
-            <div key={s.label} className="px-6 py-8 text-center bg-[var(--burgundy-deep)]/40 hover:bg-[var(--burgundy)]/40 transition-colors">
+            <div
+              key={s.label}
+              className="px-6 py-8 text-center bg-[var(--burgundy-deep)]/40 hover:bg-[var(--burgundy)]/40 transition-colors"
+            >
               <div className="font-display text-4xl md:text-5xl gradient-gold-text">{s.num}</div>
               <div className="mt-2 text-[10px] md:text-xs uppercase tracking-[0.3em] text-[var(--ivory)]/70">
                 {s.label}
@@ -147,7 +156,16 @@ export function Hero() {
         <div className="marquee-track text-xs tracking-[0.4em] uppercase text-[var(--gold)]/80">
           {Array.from({ length: 2 }).map((_, i) => (
             <div key={i} className="flex shrink-0 gap-10 px-10">
-              {["I.C.O.R.E 2026", "Jaipur · Pink City", "21–27 November", "500+ Implant Placements", "35 Full-Mouth Rehabilitations", "Live Surgery", "CME / CPD", "Indexed Research"].map((t) => (
+              {[
+                "I.C.O.R.E 2026",
+                "Jaipur · Pink City",
+                "21–27 November",
+                "500+ Implant Placements",
+                "35 Full-Mouth Rehabilitations",
+                "Live Surgery",
+                "CME / CPD",
+                "Indexed Research",
+              ].map((t) => (
                 <span key={t} className="flex items-center gap-10">
                   <span className="text-[var(--gold)]">✦</span>
                   {t}

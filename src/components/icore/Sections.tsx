@@ -442,11 +442,36 @@ export function Faculty() {
 
 /* ---------------- MEDICAL PANEL ---------------- */
 export function MedicalPanel() {
+  const img = (file: string) => `/images/faculty/${file}`;
   const panel = [
-    { t: "Neurology", d: "Cranial nerve protection · Pain pathways · TMJ neurology", icon: "✦" },
-    { t: "Psychiatry", d: "Patient anxiety · Body-image rehabilitation · Behavioral medicine", icon: "✦" },
-    { t: "Bone Health", d: "Endocrinology · Bisphosphonate management · Osteoporosis protocols", icon: "✦" },
-    { t: "Nuclear Medicine", d: "Consent counseling · Long-term satisfaction · Outcome perception", icon: "✦" },
+    {
+      t: "Nuclear Medicine",
+      d: "Dr. Shubham Dadhich",
+      q: "MBBS · MD NUCLEAR MEDICINE",
+      f: ["Consent counseling", "Long-term satisfaction", "Outcome perception"],
+      image: img("shubham-dadhich.jpeg"),
+    },
+    {
+      t: "Bone Health",
+      d: "Dr. Divanshu Sharma",
+      q: "MBBS · MS ORTHOPEDICS (RES.)",
+      f: ["Endocrinology", "Bisphosphonate management", "Osteoporosis protocols"],
+      image: img("divyanshu-sharma.jpeg"),
+    },
+    {
+      t: "Psychiatry",
+      d: "Dr. Aditya Singhal",
+      q: "MBBS · MD · DNB PSYCHIATRY",
+      f: ["Patient anxiety", "Body-image rehabilitation", "Behavioral medicine"],
+      image: img("aditya-singhal.jpeg"),
+    },
+    {
+      t: "Neurology",
+      d: "Dr. Love Sharma",
+      q: "MBBS · RESIDENT NEUROLOGY",
+      f: ["Cranial nerve protection", "Pain pathways", "TMJ neurology"],
+      image: img("love-sharma.jpeg"),
+    },
   ];
   return (
     <SectionShell
@@ -455,7 +480,7 @@ export function MedicalPanel() {
       title="The Interdisciplinary Panel"
       subtitle="Implantology does not exist in isolation. ICORE convenes specialists across medicine to treat the patient — not the tooth."
     >
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid gap-6 md:grid-cols-2">
         {panel.map((p, i) => (
           <motion.div
             key={p.t}
@@ -463,11 +488,18 @@ export function MedicalPanel() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
-            className="ornament-frame p-8 text-center bg-[var(--card)]/40"
+            className="group ornament-frame overflow-hidden border border-[var(--gold)]/20 bg-[var(--burgundy)]/30 p-4 transition-all duration-500 hover:border-[var(--gold)]/45 hover:bg-[var(--burgundy)]/45 md:p-5"
           >
-            <div className="text-3xl text-[var(--gold)]">{p.icon}</div>
-            <h3 className="mt-4 font-display text-xl text-[var(--ivory)]">{p.t}</h3>
-            <p className="mt-3 text-sm text-[var(--ivory)]/65 leading-relaxed">{p.d}</p>
+            <div className="mb-4 inline-flex items-center rounded-full border border-[var(--gold)]/40 bg-[var(--burgundy)]/50 px-3 py-1 text-[10px] uppercase tracking-[0.28em] text-[var(--gold-soft)]">
+              {p.t}
+            </div>
+            <FacultyCard
+              member={{ n: p.d, r: p.q, y: `${p.t} Lead`, image: p.image }}
+              index={i}
+            />
+            <p className="mt-4 border-t border-[var(--gold)]/20 pt-4 text-sm text-[var(--ivory)]/70">
+              {p.f.join(" · ")}
+            </p>
           </motion.div>
         ))}
       </div>

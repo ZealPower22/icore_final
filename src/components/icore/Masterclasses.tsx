@@ -45,9 +45,18 @@ const masterclasses: MasterclassData[] = [
       image: "/images/faculty/shiva-kumar.jpeg",
     },
     highlights: [
-      { title: "Learn 3D Printing Technologies", items: ["SLA", "DLP", "Material Jetting comparison"] },
-      { title: "Same-Day Dentistry Workflow", items: ["Scan", "Design", "Print", "Deliver in one visit"] },
-      { title: "Material Science & Resin Types", items: ["Strength", "Biocompatibility", "Shade matching"] },
+      {
+        title: "Learn 3D Printing Technologies",
+        items: ["SLA", "DLP", "Material Jetting comparison"],
+      },
+      {
+        title: "Same-Day Dentistry Workflow",
+        items: ["Scan", "Design", "Print", "Deliver in one visit"],
+      },
+      {
+        title: "Material Science & Resin Types",
+        items: ["Strength", "Biocompatibility", "Shade matching"],
+      },
       { title: "Digital Workflow Integration", items: ["Clinic-level CAD/CAM implementation"] },
       { title: "Post-Processing Mastery", items: ["Finishing", "Glazing", "Polishing techniques"] },
     ],
@@ -71,7 +80,12 @@ const masterclasses: MasterclassData[] = [
       },
       {
         title: "Module 3 — Material Science",
-        items: ["Resin material science", "Strength & physical properties", "Market guidance", "Certification"],
+        items: [
+          "Resin material science",
+          "Strength & physical properties",
+          "Market guidance",
+          "Certification",
+        ],
       },
     ],
     format: [
@@ -94,9 +108,9 @@ const masterclasses: MasterclassData[] = [
       credentials: "B.D.S · M.D.S · MS(ITALY) · PhD · DIPLOMATE ICOI",
       about:
         "Implant surgeon, professor, and international certified mentor with 23 years of experience in advanced implantology — FMR, pterygoid & zygomatic — and peri-implant regeneration.",
-        image: "images/faculty/Dr. Johnson Raja James.jpeg",
+      image: "images/faculty/Dr. Johnson Raja James.jpeg",
     },
-    
+
     learnItems: [
       "Zygomatic implant indications & anatomy",
       "Zygomatic implant techniques",
@@ -125,7 +139,7 @@ const masterclasses: MasterclassData[] = [
       credentials: "Pioneer Trainer for Ozone Dentistry in India",
       about:
         "Pioneer Trainer for Ozone Dentistry in India · Architect of Ozone-Basal Synergy Protocol",
-        image: "images/faculty/Dr. Sudhir Doley.jpeg",
+      image: "images/faculty/Dr. Sudhir Doley.jpeg",
     },
     protocolItems: [
       "Transition from dentist → biological surgeon",
@@ -185,12 +199,18 @@ function SpeakerBlock({ speaker }: { speaker: MasterclassData["speaker"] }) {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[var(--burgundy-deep)]/70 to-transparent" />
       </div>
       <div className="min-w-0 flex-1 text-center md:text-left">
-        <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">Masterclass Lead</p>
-        <h4 className="mt-2 font-display text-2xl text-[var(--ivory)] md:text-3xl">{speaker.name}</h4>
+        <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">
+          Masterclass Lead
+        </p>
+        <h4 className="mt-2 font-display text-2xl text-[var(--ivory)] md:text-3xl">
+          {speaker.name}
+        </h4>
         <p className="mt-2 text-xs font-medium uppercase tracking-[0.14em] text-[var(--gold-soft)] md:text-sm">
           {speaker.credentials}
         </p>
-        <p className="mt-4 font-serif text-sm leading-relaxed text-[var(--ivory)]/70 md:text-base">{speaker.about}</p>
+        <p className="mt-4 font-serif text-sm leading-relaxed text-[var(--ivory)]/70 md:text-base">
+          {speaker.about}
+        </p>
       </div>
     </div>
   );
@@ -216,10 +236,16 @@ function DetailPanel({ data }: { data: MasterclassData }) {
         </div>
         <h3 className="mt-3 font-display text-2xl text-[var(--ivory)] md:text-4xl">{data.title}</h3>
         {data.subtitle && (
-          <p className="mt-2 text-xs uppercase tracking-[0.35em] text-[var(--gold)]/80">{data.subtitle}</p>
+          <p className="mt-2 text-xs uppercase tracking-[0.35em] text-[var(--gold)]/80">
+            {data.subtitle}
+          </p>
         )}
-        <p className="mt-4 text-sm uppercase tracking-[0.2em] text-[var(--gold-soft)]">{data.duration}</p>
-        <p className="mt-4 font-serif text-base leading-relaxed text-[var(--ivory)]/75 md:text-lg">{data.description}</p>
+        <p className="mt-4 text-sm uppercase tracking-[0.2em] text-[var(--gold-soft)]">
+          {data.duration}
+        </p>
+        <p className="mt-4 font-serif text-base leading-relaxed text-[var(--ivory)]/75 md:text-lg">
+          {data.description}
+        </p>
         {data.quote && (
           <blockquote className="mt-6 border-l-2 border-[var(--gold)]/60 pl-4 font-serif text-lg italic text-[var(--gold-soft)] md:text-xl">
             &ldquo;{data.quote}&rdquo;
@@ -232,12 +258,19 @@ function DetailPanel({ data }: { data: MasterclassData }) {
       <div className="space-y-8 p-6 md:p-8">
         {data.highlights && (
           <section>
-            <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">Course Highlights</h5>
+            <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">
+              Course Highlights
+            </h5>
             <div className="gold-divider my-4 max-w-xs" />
             <div className="grid gap-6 sm:grid-cols-2">
               {data.highlights.map((group) => (
-                <div key={group.title} className="border border-[var(--gold)]/10 bg-[var(--burgundy)]/20 p-4 md:p-5">
-                  <h6 className="font-display text-sm text-[var(--ivory)] md:text-base">{group.title}</h6>
+                <div
+                  key={group.title}
+                  className="border border-[var(--gold)]/10 bg-[var(--burgundy)]/20 p-4 md:p-5"
+                >
+                  <h6 className="font-display text-sm text-[var(--ivory)] md:text-base">
+                    {group.title}
+                  </h6>
                   <div className="mt-3">
                     <BulletList items={group.items} />
                   </div>
@@ -249,7 +282,9 @@ function DetailPanel({ data }: { data: MasterclassData }) {
 
         {data.learnItems && (
           <section>
-            <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">What You&apos;ll Learn</h5>
+            <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">
+              What You&apos;ll Learn
+            </h5>
             <div className="gold-divider my-4 max-w-xs" />
             <BulletList items={data.learnItems} />
           </section>
@@ -257,7 +292,9 @@ function DetailPanel({ data }: { data: MasterclassData }) {
 
         {data.protocolItems && (
           <section>
-            <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">The Ozone Protocol</h5>
+            <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">
+              The Ozone Protocol
+            </h5>
             <div className="gold-divider my-4 max-w-xs" />
             <div className="grid gap-2 sm:grid-cols-2">
               {data.protocolItems.map((item) => (
@@ -275,7 +312,9 @@ function DetailPanel({ data }: { data: MasterclassData }) {
 
         {data.modules && (
           <section>
-            <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">Curriculum</h5>
+            <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">
+              Curriculum
+            </h5>
             <div className="gold-divider my-4 max-w-xs" />
             <div className="space-y-4">
               {data.modules.map((mod, i) => (
@@ -294,12 +333,19 @@ function DetailPanel({ data }: { data: MasterclassData }) {
         )}
 
         <section>
-          <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">Format & Inclusion</h5>
+          <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">
+            Format & Inclusion
+          </h5>
           <div className="gold-divider my-4 max-w-xs" />
           <div className="grid gap-3 sm:grid-cols-2">
             {data.format.map((row) => (
-              <div key={row.label} className="border border-[var(--gold)]/15 bg-[var(--burgundy-deep)]/40 px-4 py-3">
-                <div className="text-[10px] uppercase tracking-[0.25em] text-[var(--gold)]/70">{row.label}</div>
+              <div
+                key={row.label}
+                className="border border-[var(--gold)]/15 bg-[var(--burgundy-deep)]/40 px-4 py-3"
+              >
+                <div className="text-[10px] uppercase tracking-[0.25em] text-[var(--gold)]/70">
+                  {row.label}
+                </div>
                 <div className="mt-1 text-sm text-[var(--ivory)]/85">{row.value}</div>
               </div>
             ))}
@@ -340,7 +386,9 @@ export function MasterclassesSection() {
               >
                 {it.tag}
               </span>
-              <span className="font-display text-sm leading-snug text-[var(--ivory)] md:text-base">{it.title}</span>
+              <span className="font-display text-sm leading-snug text-[var(--ivory)] md:text-base">
+                {it.title}
+              </span>
             </div>
           </button>
         ))}

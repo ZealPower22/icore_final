@@ -22,13 +22,19 @@ export function CartDrawer({
   items,
   onClose,
   onRemove,
+  onIncreaseQuantity,
+  onDecreaseQuantity,
 }: {
   open: boolean;
   items: CartItem[];
   onClose: () => void;
   onRemove: (id: string) => void;
+  onIncreaseQuantity: (id: string) => void;
+  onDecreaseQuantity: (id: string) => void;
 }) {
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const gst = subtotal * 0.18;
+  const total = subtotal + gst;
 
   return (
     <motion.aside
@@ -41,14 +47,16 @@ export function CartDrawer({
         <div className="flex items-center justify-between gap-4 border-b border-[var(--gold)]/15 pb-4">
           <div>
             <div className="text-xs uppercase tracking-[0.4em] text-[var(--gold)]/80">Cart</div>
-            <h2 className="mt-3 text-2xl font-display text-[var(--ivory)]">Your reservation basket</h2>
+            <h2 className="mt-3 text-2xl font-display text-[var(--ivory)]">
+              Your reservation basket
+            </h2>
           </div>
           <button
             type="button"
             onClick={onClose}
             className="text-sm uppercase tracking-[0.3em] text-[var(--gold)]/80 hover:text-[var(--gold)] transition"
           >
-            Close
+            ✖
           </button>
         </div>
 
@@ -59,16 +67,53 @@ export function CartDrawer({
             </div>
           ) : (
             items.map((item) => (
-              <div key={item.id} className="rounded-3xl border border-[var(--gold)]/15 bg-[var(--burgundy)]/30 p-5">
+              <div
+                key={item.id}
+                className="rounded-3xl border border-[var(--gold)]/15 bg-[var(--burgundy)]/30 p-5"
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <div className="text-sm uppercase tracking-[0.3em] text-[var(--gold)]/80">{item.source}</div>
-                    <div className="mt-2 font-display text-lg text-[var(--ivory)]">{item.title}</div>
+                    <div className="text-sm uppercase tracking-[0.3em] text-[var(--gold)]/80">
+                      {item.source}
+                    </div>
+                    <div className="mt-2 font-display text-lg text-[var(--ivory)]">
+                      {item.title}
+                    </div>
                     <div className="mt-2 text-sm text-[var(--ivory)]/70">{item.label}</div>
                   </div>
                   <div className="text-right">
-                    <div className="font-display text-lg text-[var(--gold)]">{formatCurrency(item.price)}</div>
-                    <div className="mt-1 text-xs uppercase tracking-[0.3em] text-[var(--ivory)]/70">Qty {item.quantity}</div>
+                    <div className="font-display text-lg text-[var(--gold)]">
+                      {formatCurrency(item.price * item.quantity)}
+                    </div>
+                    <div className="mt-1 text-[11px] uppercase tracking-[0.2em] text-[var(--ivory)]/70">
+                      Unit {formatCurrency(item.price)}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 flex items-center justify-between gap-4">
+                  <div className="inline-flex items-center overflow-hidden rounded-full border border-[var(--gold)]/30 bg-[var(--burgundy-deep)]/60">
+                    <button
+                      type="button"
+                      onClick={() => onDecreaseQuantity(item.id)}
+                      aria-label={`Decrease quantity for ${item.title}`}
+                      className="px-3 py-1.5 text-sm text-[var(--gold)] transition hover:bg-[var(--gold)]/15"
+                    >
+                      -
+                    </button>
+                    <span className="min-w-10 px-3 text-center text-sm font-medium text-[var(--ivory)]">
+                      {item.quantity}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => onIncreaseQuantity(item.id)}
+                      aria-label={`Increase quantity for ${item.title}`}
+                      className="px-3 py-1.5 text-sm text-[var(--gold)] transition hover:bg-[var(--gold)]/15"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <div className="text-xs uppercase tracking-[0.3em] text-[var(--ivory)]/60">
+                    Qty {item.quantity}
                   </div>
                 </div>
                 <button
@@ -86,7 +131,16 @@ export function CartDrawer({
         <div className="mt-6 rounded-3xl border border-[var(--gold)]/15 bg-[var(--burgundy)]/20 p-6">
           <div className="flex items-center justify-between text-sm uppercase tracking-[0.3em] text-[var(--ivory)]/70">
             <span>Subtotal</span>
-            <span className="font-display text-lg text-[var(--gold)]">{formatCurrency(total)}</span>
+            <span className="font-display text-lg text-[var(--gold)]">{formatCurrency(subtotal)}</span>
+          </div>
+          <div className="mt-3 flex items-center justify-between text-sm uppercase tracking-[0.3em] text-[var(--ivory)]/70">
+            <span>GST (18%)</span>
+            <span className="font-display text-lg text-[var(--gold)]">{formatCurrency(gst)}</span>
+          </div>
+          <div className="mt-3 h-px bg-[var(--gold)]/20" />
+          <div className="mt-3 flex items-center justify-between text-sm uppercase tracking-[0.3em] text-[var(--ivory)]">
+            <span>Total</span>
+            <span className="font-display text-xl text-[var(--gold)]">{formatCurrency(total)}</span>
           </div>
           <p className="mt-3 text-xs text-[var(--ivory)]/60 leading-relaxed">
             Your reservation totals update instantly. Proceed when you are ready to pay.

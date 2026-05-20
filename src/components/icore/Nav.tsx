@@ -10,7 +10,13 @@ const links = [
   { href: "#jaipur", label: "Jaipur" },
 ];
 
-export function Nav({ cartCount = 0, onOpenCart }: { cartCount?: number; onOpenCart?: () => void }) {
+export function Nav({
+  cartCount = 0,
+  onOpenCart,
+}: {
+  cartCount?: number;
+  onOpenCart?: () => void;
+}) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -31,7 +37,9 @@ export function Nav({ cartCount = 0, onOpenCart }: { cartCount?: number; onOpenC
             ✦
           </div>
           <div className="leading-tight">
-            <div className="font-display text-sm tracking-[0.3em] text-[var(--ivory)]">I.C.O.R.E</div>
+            <div className="font-display text-sm tracking-[0.3em] text-[var(--ivory)]">
+              I.C.O.R.E
+            </div>
             <div className="text-[10px] tracking-[0.3em] text-[var(--gold)]/80">JAIPUR · 2026</div>
           </div>
         </a>

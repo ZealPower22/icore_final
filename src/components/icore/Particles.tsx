@@ -10,7 +10,7 @@ export function Particles({ count = 30 }: { count?: number }) {
         size: 1 + Math.random() * 3,
         key: i,
       })),
-    [count]
+    [count],
   );
 
   return (

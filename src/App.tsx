@@ -42,7 +42,7 @@ function App() {
       const existing = prev.find((entry) => entry.id === item.id);
       if (existing) {
         return prev.map((entry) =>
-          entry.id === item.id ? { ...entry, quantity: entry.quantity + 1 } : entry
+          entry.id === item.id ? { ...entry, quantity: entry.quantity + 1 } : entry,
         );
       }
       return [...prev, { ...item, quantity: 1 }];
@@ -53,6 +53,26 @@ function App() {
 
   const handleRemoveItem = (id: string) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const handleIncreaseQuantity = (id: string) => {
+    setCart((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity: item.quantity + 1 } : item)),
+    );
+  };
+
+  const handleDecreaseQuantity = (id: string) => {
+    setCart((prev) =>
+      prev.flatMap((item) => {
+        if (item.id !== id) {
+          return [item];
+        }
+        if (item.quantity <= 1) {
+          return [];
+        }
+        return [{ ...item, quantity: item.quantity - 1 }];
+      }),
+    );
   };
 
   return (
@@ -87,12 +107,21 @@ function App() {
             {cartCount}
           </span>
         </button>
-        <div className={`w-full max-w-xs overflow-hidden rounded-3xl border border-[var(--gold)]/20 bg-[var(--burgundy-deep)]/95 px-5 py-4 text-sm text-[var(--ivory)] shadow-luxe transition-all duration-300 ${toastMessage ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+        <div
+          className={`w-full max-w-xs overflow-hidden rounded-3xl border border-[var(--gold)]/20 bg-[var(--burgundy-deep)]/95 px-5 py-4 text-sm text-[var(--ivory)] shadow-luxe transition-all duration-300 ${toastMessage ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        >
           {toastMessage}
         </div>
       </div>
 
-      <CartDrawer open={cartOpen} items={cart} onClose={() => setCartOpen(false)} onRemove={handleRemoveItem} />
+      <CartDrawer
+        open={cartOpen}
+        items={cart}
+        onClose={() => setCartOpen(false)}
+        onRemove={handleRemoveItem}
+        onIncreaseQuantity={handleIncreaseQuantity}
+        onDecreaseQuantity={handleDecreaseQuantity}
+      />
     </main>
   );
 }
