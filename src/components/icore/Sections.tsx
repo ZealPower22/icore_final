@@ -120,25 +120,22 @@ export function CoreStory() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="group ornament-frame overflow-hidden glass"
           >
-            <div className="relative aspect-[16/10] overflow-hidden">
+            <div className="p-6 pb-0 md:p-8 md:pb-0">
+              <div className="overflow-hidden rounded-xl border border-[var(--gold)]/25 bg-[var(--burgundy)]/40">
               <img
                 src={s.image}
                 alt={s.imageAlt}
-                className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                className="h-56 w-full object-contain object-center transition-transform duration-700 ease-out group-hover:scale-[1.02] md:h-64"
                 loading="lazy"
               />
-              <motion.div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--burgundy-deep)] via-[var(--burgundy-deep)]/50 to-[var(--burgundy)]/10" aria-hidden />
-              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-[var(--gold)]/10 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--gold)]/60 to-transparent" />
-              <div className="absolute bottom-4 left-5 right-5 md:bottom-5 md:left-6 md:right-6">
-                <div className="text-[10px] uppercase tracking-[0.35em] text-[var(--gold)]">{s.tag}</div>
-                <h3 className="mt-2 font-display text-2xl md:text-3xl text-[var(--ivory)] drop-shadow-lg">
-                  {s.title}
-                </h3>
               </div>
             </div>
             <div className="relative p-8 md:p-10">
-              <div className="gold-divider mb-5 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="text-[10px] uppercase tracking-[0.35em] text-[var(--gold)]">{s.tag}</div>
+              <h3 className="mt-2 font-display text-2xl md:text-3xl text-[var(--ivory)]">
+                {s.title}
+              </h3>
+              <div className="gold-divider my-5 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
               <p className="font-serif text-base md:text-lg leading-relaxed text-[var(--ivory)]/75">{s.desc}</p>
             </div>
           </motion.div>
