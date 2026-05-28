@@ -397,7 +397,7 @@ export function Faculty() {
         { n: "Dr. Rajesh Sharma", r: "HOD PEDODONTIST , JDC", y: "Mentor for both Two Piece & Single Piece Implantology, 35 + Publications , Done 1000 + Full Rehabilitation.", image: img("rajesh-sharma.jpeg") },
         { n: "Dr. Johnson Raja James", r: "BDS · MDS · MS(ITALY) · PhD · DIPLOMATEICOI", y: "Implant surgeon & international mentor with 23 years experience in FMR, Pterygoid, & Zygomatic implantology Peri-implant regeneration expert", image: img("Dr. Johnson Raja James.jpeg") },
         { n: "Dr. Dhruv Arora", r: "BDS , MDS Prosthodontics GDC Pondicherry", y: "Internationally acclaimed Prosthodontist & Implant Surgeon with expertise in advanced implantology, full mouth rehabilitation, and peri-implant regeneration. Trained 2500+ dentists globally in implant dentistry.", image: img("Dr. Dhruv Arora.jpeg") },
-        { n: "Dr. Sumanth Krishna", r: "GOLD MEDALIST· OMFS · IFED TEACHER", y: "Gold Medalist Oral & Maxillofacial Surgeon IFED certified teacher. International experience faculty", image: img("nb-singh.jpeg") },
+        { n: "Dr. Sumanth Krishna", r: "GOLD MEDALIST· OMFS · IFED TEACHER", y: "Gold Medalist Oral & Maxillofacial Surgeon IFED certified teacher. International experience faculty", image: img("Dr. Sumanth Krishna.jpeg") },
         { n: "Dr. Sachin Sachdeva", r: "PROFESSOR & HOD, MAXILLOFACIAL SURGERY", y: "senior Implantologist. Trained 200+ Corticobasal surgeons Published author in strategic implantology", image: img("sachin sachdeva.jpeg") },
         { n: "Dr. Ashish Sethi", r: "MOI SWITZERLAND · MS IMPLANT", y: "FFA · FAFO (Ortho) · FILI London · Master of Oral Implantology", image: img("ashish-sethi.jpeg") },
         { n: "Dr. N.B Singh", r: "SENIOR STRATEGIC IMPLANTOLOGIST", y: "Advanced corticobasal techniques · Clinical mentor", image: img("nb-singh.jpeg") },
@@ -411,7 +411,7 @@ export function Faculty() {
       members: [
         { n: "Dr. Kanak Pareek", r: "BDS MDS OMFR (CPS)", y: "Founder of Metagnostic · Inventor of the Angle Assist and IOPA surgical systems · Project Director of Robotic & Guided Surgery Technical R&D", image: img("Dr. Kanak Pareek.jpeg") },
         { n: "Dr. Ayush Shrivastava", r: "BDS MDS OMFS (CPS)", y: "Bicortical Implantologist · Chief Scientist at Metagnostics · Expert in Robotic Innovations in dental surgery", image: img("Dr. Ayush Shrivastava.jpeg") },
-        { n: "Dr. Abhaydeep Singh", r: "IMPLANT DESIGN EXPERT", y: "Bi Cortical Implantologist · 10+ Years · Developing macro-thread designs that dissipate masticatory stress across the basal bone, preventing localized pressure and crestal resorption", image: img("abhaydeep-singh.jpeg") },
+        { n: "Dr. Abhaydeep Singh", r: "IMPLANT DESIGN EXPERT", y: "Bi Cortical Implantologist 10+ Years. Authority in Bio-mechanically driven implant design for immediate functional loading", image: img("abhaydeep-singh.jpeg") },
         { n: "Dr. Vishwas Sharma", r: "BI CORTICAL SURGEON", y: "Implantologist · Perioperative Care Specialist", image: img("vishwas-sharma.jpeg") },
         { n: "Dr. Shiva Kumar S.A.", r: "BDS · DIGITAL WORKFLOW", y: "Master of 3D Printing and Digital Workflow · Digital dentistry pioneer · 2-day intensive lead", image: img("shiva-kumar.jpeg") },
       ],
@@ -573,12 +573,12 @@ export function Venue() {
     { t: "Auditorium", d: "500+ capacity · Tiered seating · 4K projection", n: "01", img: "/images/Venue/Auditorium.jpeg" },
     { t: "Mega OT", d: "6 surgical chairs · Live broadcast · Sterile zones", n: "02", img: "/images/Venue/Mega OT.jpeg" },
     { t: "War Room", d: "Case planning · CBCT review · Mentor pods", n: "03", img: "/images/Venue/War room.jpeg" },
-    { t: "Food Court", d: "Royal Rajasthani cuisine · Networking lounges", n: "04", img: "/images/Venue/Food court.jpeg" },
-    { t: "Trade Fair", d: "Premium exhibitors • Live product demos • Innovation showcase", n: "05", img: "/images/Venue/Trade Fair.jpeg" },
+    { t: "Food Court and Trade Fair", d: "Royal Rajasthani cuisine · Networking lounges  • Live product demos ", n: "04", img: "/images/Venue/Trade Fair.jpeg" },
+    
   ];
   return (
     <SectionShell id="venue" label="The Ground" title="Venue · SIAM Institute , Jaipur" dark>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
         {f.map((x, i) => (
           <motion.div
             key={x.t}
