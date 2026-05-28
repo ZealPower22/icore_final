@@ -15,7 +15,8 @@ const BANK_DETAILS = {
   accountNumber: "3716159977",
   ifscCode: "CBIN0281915",
 } as const;
-const MAX_PROOF_SIZE_BYTES = 5 * 1024 * 1024;
+/** Keep small so JSON + base64 stays under Apps Script / Vercel limits */
+const MAX_PROOF_SIZE_BYTES = 3 * 1024 * 1024;
 const ACCEPTED_PROOF_TYPES = ["image/jpeg", "image/jpg", "application/pdf"];
 
 const attendeeSchema = z.object({
@@ -100,7 +101,7 @@ export function CheckoutPage() {
       return "Only JPG or PDF files are allowed";
     }
     if (file.size > MAX_PROOF_SIZE_BYTES) {
-      return "File must be 5 MB or smaller";
+      return "File must be 3 MB or smaller";
     }
     return "";
   };

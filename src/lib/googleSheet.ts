@@ -5,7 +5,6 @@ export type RegistrationSheetPayload = {
   qualification: string;
   implantExperience: string;
   additionalInfo: string;
-  /** Legacy column name used by your original sheet */
   paymentId: string;
   orderId: string;
   paymentStatus: string;
@@ -21,47 +20,89 @@ export type RegistrationSheetPayload = {
   submittedAt: string;
 };
 
-const DEFAULT_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyctNSWfITxpyHWjsxVChOemqrlsE3DvnSDM1N0ZhiRJKev6K9lxi92nRD1aTVSkXibXA/exec";
+/** Your latest Apps Script web app deployment */
+export const GOOGLE_SCRIPT_WEB_APP_URL =
+  "https://script.google.com/macros/s/AKfycbwk2gxOn9oIEBq2yFu-NUOEE8-dWmUOpWFNST_k4j3OxVOSUSUGG5ZarzkXBzH0FYpwJg/exec";
 
-const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || DEFAULT_SCRIPT_URL;
+type ScriptResponse = {
+  success?: boolean;
+  status?: string;
+  message?: string;
+  error?: string;
+  proofLink?: string;
+};
+
+function getSubmitUrl(): string {
+  if (import.meta.env.VITE_SUBMIT_API_URL) {
+    return import.meta.env.VITE_SUBMIT_API_URL;
+  }
+  if (import.meta.env.PROD) {
+    return "/api/submit-registration";
+  }
+  return import.meta.env.VITE_GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_WEB_APP_URL;
+}
+
+function isDirectAppsScriptUrl(url: string) {
+  return url.includes("script.google.com");
+}
+
+export function parseScriptResponse(
+  responseOk: boolean,
+  data: ScriptResponse,
+  rawText?: string,
+): { ok: boolean; message?: string } {
+  if (data.status === "error" || data.success === false) {
+    return { ok: false, message: data.message || data.error || rawText || "Spreadsheet update failed" };
+  }
+  if (data.status === "success" || data.success === true) {
+    return { ok: true, message: data.message };
+  }
+  if (responseOk) {
+    return { ok: true };
+  }
+  return { ok: false, message: data.message || rawText || "Spreadsheet update failed" };
+}
 
 export async function submitToGoogleSheet(payload: RegistrationSheetPayload) {
+  const url = getSubmitUrl();
   const body = JSON.stringify(payload);
+  const direct = isDirectAppsScriptUrl(url);
 
-  const response = await fetch(GOOGLE_SCRIPT_URL, {
+  const response = await fetch(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8",
-    },
+    headers: direct
+      ? { "Content-Type": "text/plain;charset=utf-8" }
+      : { "Content-Type": "application/json" },
     body,
   });
 
-  if (response.ok) {
-    try {
-      const data = (await response.json()) as { success?: boolean; error?: string };
-      if (data.success === false) {
-        throw new Error(data.error ?? "Spreadsheet update failed");
-      }
-    } catch (err) {
-      if (err instanceof Error && err.message !== "Spreadsheet update failed") {
-        // Non-JSON success response is acceptable for Apps Script.
-        return;
-      }
-      throw err;
+  const text = await response.text().catch(() => "");
+
+  if (!text) {
+    if (!response.ok) {
+      throw new Error(
+        direct
+          ? "Submission failed. Confirm Web app is deployed as Anyone and URL is correct."
+          : "Submission failed. Set GOOGLE_SCRIPT_URL on Vercel and redeploy.",
+      );
     }
     return;
   }
 
-  // Fallback for strict Apps Script CORS (cannot read response).
-  await fetch(GOOGLE_SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8",
-    },
-    body,
-  });
+  let data: ScriptResponse = {};
+  try {
+    data = JSON.parse(text) as ScriptResponse;
+  } catch {
+    if (!response.ok) {
+      throw new Error(text.slice(0, 240) || "Submission failed");
+    }
+    return;
+  }
+
+  const result = parseScriptResponse(response.ok, data, text);
+  if (!result.ok) {
+    throw new Error(result.message || "Spreadsheet update failed. Check Apps Script → Executions.");
+  }
 }
 
 export function fileToBase64(file: File): Promise<string> {
