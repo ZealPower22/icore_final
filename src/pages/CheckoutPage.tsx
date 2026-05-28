@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useCart } from "@/context/CartProvider";
 import { formatCurrency, getOrderSummary } from "@/lib/currency";
-import { fileToBase64, formatCartSummary, submitToGoogleSheet } from "@/lib/googleSheet";
+import { formatCartSummary, submitToGoogleSheet } from "@/lib/googleSheet";
 
 const QR_IMAGE_PATH = "/images/Payment/qrcode.jpeg";
 
@@ -15,10 +15,6 @@ const BANK_DETAILS = {
   accountNumber: "3716159977",
   ifscCode: "CBIN0281915",
 } as const;
-/** Keep small so JSON + base64 stays under Apps Script / Vercel limits */
-const MAX_PROOF_SIZE_BYTES = 3 * 1024 * 1024;
-const ACCEPTED_PROOF_TYPES = ["image/jpeg", "image/jpg", "application/pdf"];
-
 const attendeeSchema = z.object({
   name: z.string().min(2, "Enter your full name"),
   phone: z
@@ -33,6 +29,16 @@ const attendeeSchema = z.object({
 
 const paymentSchema = z.object({
   transactionId: z.string().min(4, "Enter your transaction / UTR ID"),
+  proofLink: z
+    .string()
+    .min(10, "Enter your Google Drive link")
+    .url("Enter a valid URL")
+    .refine(
+      (url) =>
+        /drive\.google\.com|docs\.google\.com/i.test(url) ||
+        /^https?:\/\/.+/i.test(url),
+      "Use a Google Drive share link (https://drive.google.com/...)",
+    ),
   paymentStatus: z.enum(["success", "failed"], {
     required_error: "Select payment status",
   }),
@@ -51,8 +57,6 @@ export function CheckoutPage() {
   const { items, clearCart } = useCart();
   const [step, setStep] = useState<"details" | "payment">("details");
   const [attendeeData, setAttendeeData] = useState<AttendeeForm | null>(null);
-  const [proofFile, setProofFile] = useState<File | null>(null);
-  const [proofError, setProofError] = useState("");
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -90,20 +94,6 @@ export function CheckoutPage() {
     setAttendeeData(data);
     setStep("payment");
     setSubmitError("");
-    setProofError("");
-  };
-
-  const validateProofFile = (file: File | null) => {
-    if (!file) {
-      return "Upload payment proof (JPG or PDF)";
-    }
-    if (!ACCEPTED_PROOF_TYPES.includes(file.type)) {
-      return "Only JPG or PDF files are allowed";
-    }
-    if (file.size > MAX_PROOF_SIZE_BYTES) {
-      return "File must be 3 MB or smaller";
-    }
-    return "";
   };
 
   const onPaymentSubmit = async (data: PaymentForm) => {
@@ -118,18 +108,10 @@ export function CheckoutPage() {
       return;
     }
 
-    const proofValidation = validateProofFile(proofFile);
-    if (proofValidation) {
-      setProofError(proofValidation);
-      return;
-    }
-
-    setProofError("");
     setSubmitError("");
     setIsSubmitting(true);
 
     try {
-      const proofBase64 = proofFile ? await fileToBase64(proofFile) : undefined;
       const orderId = `ICORE-${Date.now()}`;
       const cartSummary = formatCartSummary(items);
 
@@ -158,9 +140,7 @@ export function CheckoutPage() {
           })),
         ),
         cartSummary,
-        proofFileName: proofFile?.name,
-        proofMimeType: proofFile?.type,
-        proofBase64,
+        proofLink: data.proofLink.trim(),
         submittedAt: new Date().toISOString(),
       });
 
@@ -185,7 +165,7 @@ export function CheckoutPage() {
   const canSubmitPayment =
     paymentStatus === "success" &&
     Boolean(paymentForm.watch("transactionId")?.trim()) &&
-    Boolean(proofFile) &&
+    Boolean(paymentForm.watch("proofLink")?.trim()) &&
     !isSubmitting;
 
   return (
@@ -206,7 +186,7 @@ export function CheckoutPage() {
           <p className="mt-4 max-w-2xl mx-auto font-serif italic text-lg text-[var(--ivory)]/70">
             {step === "details"
               ? "Share your details, then pay using the QR code and submit proof."
-              : `Scan the QR and pay ${formatCurrency(summary.total)} (incl. 18% GST), then submit your transaction details.`}
+              : `Scan the QR and pay ${formatCurrency(summary.total)} (incl. 18% GST), then submit your transaction ID and Drive proof link.`}
           </p>
         </div>
 
@@ -459,7 +439,8 @@ export function CheckoutPage() {
                 </div>
 
                 <p className="mt-6 text-center text-sm text-[var(--ivory)]/65">
-                  After payment, enter your transaction ID and upload proof below.
+                  After payment, upload your proof to Google Drive, set sharing to Anyone with the
+                  link, then paste the link below.
                 </p>
               </div>
 
@@ -482,24 +463,22 @@ export function CheckoutPage() {
 
                 <div>
                   <label className="text-xs uppercase tracking-[0.3em] text-[var(--gold)]/90">
-                    Payment proof (JPG or PDF)
+                    Payment proof — Google Drive link
                   </label>
                   <input
-                    type="file"
-                    accept=".jpg,.jpeg,.pdf,image/jpeg,application/pdf"
-                    className={`${inputClass} file:mr-4 file:rounded-lg file:border-0 file:bg-[var(--gold)] file:px-4 file:py-2 file:text-xs file:uppercase file:tracking-[0.2em] file:text-[var(--burgundy-deep)]`}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0] ?? null;
-                      setProofFile(file);
-                      setProofError(validateProofFile(file));
-                    }}
+                    className={inputClass}
+                    type="url"
+                    placeholder="https://drive.google.com/file/d/..."
+                    {...paymentForm.register("proofLink")}
                   />
-                  {proofFile && (
-                    <p className="mt-2 text-xs text-[var(--ivory)]/60">
-                      Selected: {proofFile.name} ({(proofFile.size / 1024).toFixed(0)} KB)
+                  <p className="mt-2 text-xs text-[var(--ivory)]/55">
+                    Upload proof to Drive → Share → Anyone with the link → Copy link and paste here.
+                  </p>
+                  {paymentForm.formState.errors.proofLink && (
+                    <p className="mt-2 text-xs text-red-300">
+                      {paymentForm.formState.errors.proofLink.message}
                     </p>
                   )}
-                  {proofError && <p className="mt-2 text-xs text-red-300">{proofError}</p>}
                 </div>
 
                 <div>
@@ -516,7 +495,7 @@ export function CheckoutPage() {
                   </select>
                   {paymentStatus !== "success" && (
                     <p className="mt-2 text-xs text-amber-200/90">
-                      Submit is enabled only when payment is marked successful and proof is uploaded.
+                      Submit is enabled only when payment is marked successful and the Drive link is added.
                     </p>
                   )}
                 </div>

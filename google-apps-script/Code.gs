@@ -1,5 +1,8 @@
 const SHEET_NAME = "Sheet1";
-const PROOF_FOLDER_ID = ""; // Optional Google Drive Folder ID
+
+/** Column numbers (1-based): P = Proof label, Q = Proof Link */
+const COL_PROOF_FILE = 16;
+const COL_PROOF_LINK = 17;
 
 function doPost(e) {
   try {
@@ -13,17 +16,7 @@ function doPost(e) {
     }
 
     const data = JSON.parse(e.postData.contents);
-
-    let proofLink = "";
-    if (data.proofBase64 && data.proofFileName) {
-      try {
-        proofLink = saveProofFile(data);
-      } catch (uploadError) {
-        proofLink = "Upload failed";
-      }
-    } else {
-      proofLink = data.proofLink || "";
-    }
+    const proofLink = normalizeProofLink_(data.proofLink || "");
 
     const paymentId = data.paymentId || data.transactionId || "";
     const transactionId = data.transactionId || data.paymentId || "";
@@ -44,9 +37,12 @@ function doPost(e) {
       data.gst != null ? data.gst : "",
       data.total != null ? data.total : "",
       data.cartSummary || data.cartItems || "",
-      data.proofFileName || "",
+      proofLink ? "Drive link" : "",
       proofLink,
     ]);
+
+    const lastRow = sheet.getLastRow();
+    writeProofCells_(sheet, lastRow, proofLink);
 
     return jsonOut({
       status: "success",
@@ -61,18 +57,31 @@ function doPost(e) {
   }
 }
 
-function saveProofFile(data) {
-  const bytes = Utilities.base64Decode(data.proofBase64);
-  const blob = Utilities.newBlob(
-    bytes,
-    data.proofMimeType || "application/octet-stream",
-    data.proofFileName,
-  );
-  const folder = PROOF_FOLDER_ID
-    ? DriveApp.getFolderById(PROOF_FOLDER_ID)
-    : DriveApp.getRootFolder();
-  const file = folder.createFile(blob);
-  return file.getUrl();
+function normalizeProofLink_(url) {
+  var s = String(url || "").trim();
+  if (!s) return "";
+  if (s.indexOf("http://") !== 0 && s.indexOf("https://") !== 0) {
+    s = "https://" + s;
+  }
+  return s;
+}
+
+function writeProofCells_(sheet, row, proofLink) {
+  sheet.getRange(row, COL_PROOF_FILE).setValue(proofLink ? "Drive link" : "");
+
+  if (proofLink && proofLink.indexOf("http") === 0) {
+    sheet
+      .getRange(row, COL_PROOF_LINK)
+      .setFormula(buildHyperlinkFormula_(proofLink, "View payment proof"));
+  } else {
+    sheet.getRange(row, COL_PROOF_LINK).setValue(proofLink || "");
+  }
+}
+
+function buildHyperlinkFormula_(url, label) {
+  const safeUrl = String(url).replace(/"/g, '""');
+  const safeLabel = String(label).replace(/"/g, '""');
+  return '=HYPERLINK("' + safeUrl + '","' + safeLabel + '")';
 }
 
 function doGet() {

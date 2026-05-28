@@ -14,9 +14,7 @@ export type RegistrationSheetPayload = {
   total: number;
   cartItems: string;
   cartSummary: string;
-  proofFileName?: string;
-  proofMimeType?: string;
-  proofBase64?: string;
+  proofLink: string;
   submittedAt: string;
 };
 
@@ -103,27 +101,6 @@ export async function submitToGoogleSheet(payload: RegistrationSheetPayload) {
   if (!result.ok) {
     throw new Error(result.message || "Spreadsheet update failed. Check Apps Script → Executions.");
   }
-}
-
-export function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result;
-      if (typeof result !== "string") {
-        reject(new Error("Unable to read file"));
-        return;
-      }
-      const base64 = result.split(",")[1];
-      if (!base64) {
-        reject(new Error("Unable to encode file"));
-        return;
-      }
-      resolve(base64);
-    };
-    reader.onerror = () => reject(new Error("Unable to read file"));
-    reader.readAsDataURL(file);
-  });
 }
 
 export function formatCartSummary(
