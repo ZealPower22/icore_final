@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { DailyFlowTimeline } from "./DailyFlowTimeline";
+import { DailyFlowTimeline, type DailyFlowItem } from "./DailyFlowTimeline";
 import { FacultyCard, type FacultyMember } from "./FacultyCard";
 import { MasterclassesSection } from "./Masterclasses";
 import { Ornament, SectionLabel } from "./Ornament";
@@ -25,7 +25,7 @@ function SectionShell({ id, label, title, subtitle, children, dark = false }: {
   id: string; label: string; title: string; subtitle?: string; children: React.ReactNode; dark?: boolean;
 }) {
   return (
-    <section id={id} className={`relative overflow-hidden py-28 md:py-40 px-6 ${dark ? "bg-[var(--burgundy-deep)] backdrop-blur-sm" : "bg-[var(--background)] backdrop-blur-sm"}`}>
+    <section id={id} className={`relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 md:py-32 lg:py-40 ${dark ? "bg-[var(--burgundy-deep)] backdrop-blur-sm" : "bg-[var(--background)] backdrop-blur-sm"}`}>
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-16 top-16 h-80 w-80 rounded-full bg-[var(--gold)]/10 blur-3xl animate-section-glow" />
         <div className="absolute -right-16 bottom-14 h-72 w-72 rounded-full bg-[var(--burgundy)]/15 blur-3xl animate-section-drift" />
@@ -36,14 +36,14 @@ function SectionShell({ id, label, title, subtitle, children, dark = false }: {
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeUp}
-          className="text-center mb-20"
+          className="mb-14 text-center sm:mb-16 md:mb-20"
         >
           <SectionLabel>{label}</SectionLabel>
-          <h2 className="mt-6 font-display text-4xl md:text-6xl text-[var(--ivory)] tracking-wide">
+          <h2 className="mt-5 font-display text-3xl tracking-wide text-[var(--ivory)] sm:text-4xl md:mt-6 md:text-5xl lg:text-6xl">
             {title}
           </h2>
           {subtitle && (
-            <p className="mt-6 max-w-2xl mx-auto font-serif italic text-lg text-[var(--ivory)]/70">
+            <p className="mx-auto mt-4 max-w-2xl font-serif text-base italic text-[var(--ivory)]/70 sm:mt-5 sm:text-lg">
               {subtitle}
             </p>
           )}
@@ -233,10 +233,19 @@ export function Program() {
     { d: "Day 7", t: "Certificate and Award ceremony", date: "27 Nov" },
   ];
 
-  const getTimelineItems = (index: number) => {
+  const getTimelineItems = (index: number): DailyFlowItem[] => {
+    const withDetails = (
+      items: Array<{ time: string; t?: string; d?: string }>
+    ): DailyFlowItem[] =>
+      items.map((item) => ({
+        time: item.time,
+        t: item.t ?? "Session transition",
+        d: item.d ?? item.t ?? "Next session begins shortly.",
+      }));
+
     switch (index) {
       case 0:
-        return [
+        return withDetails([
           { time: "09:00", t: "Delegate Registration & Welcome"},
           { time: "10:00", t: "Inaugural Lectures - Fundamentals of Immediate loading"},
           { time: "12:30", t: "High Tea / Brunch"},
@@ -245,9 +254,9 @@ export function Program() {
           { time: "15:00", t: "Afternoon Lectures"},
           { time: "17:00", t: "Cultural Evening celebrations"},
           { time: "20:00"},
-        ];
+        ]);
       case 1:
-        return [
+        return withDetails([
           { time: "09:00", t: "Lectures - Advanced Bicortical & Tricortical Anchorage Concepts"},
           { time: "10:30", t: "High Tea / Brunch"},
           { time: "11:00", t: "Lectures and Continued Advanced Sessions"},
@@ -257,27 +266,27 @@ export function Program() {
           { time: "15:30", t: "Afternoon Lectures"},
           { time: "19:00", t: "Gala night 1"},
           { time: "22:00"},
-        ];
+        ]);
       case 2:
-        return [
+        return withDetails([
           { time: "09:00", t: "Zygomatic Masterclass (Dr. Johnson Raja James) +  3D Model Hands on"},
           { time: "12:00", t: "Prosthodontics 3D printing Master class"},
           { time: "12:00", t: "Zygomatic Live Surgery"},
           { time: "12:00", t: "FMR Implantology Live Surgery - Hands on"},
           { time: "18:00", t: "Prosthodontics  3D Printing Digital Workflow - hands on"},
           { time: "20:00"},
-        ];
+        ]);
       case 3:
-        return [
+        return withDetails([
           { time: "09:00", t: "Ozone Therapy Masterclass (Dr. Sudhir Doley)"},
           { time: "12:00", t: "FMR Implantology Live Surgery - Hands on"},
           { time: "12:00", t: "Ozone Therapy Live Patient -  Hands on"},
           { time: "12:00", t: "Digital Workflow Prosthodontics 3D Printing"},
           { time: "18:00", t: "3D Printed Prosthetics Patient Delivery - Hands on"},
           { time: "20:00"},
-        ];
+        ]);
       case 4:
-        return [
+        return withDetails([
           { time: "09:00", t: "Research Masterclass"},
           { time: "09:00", t: "Dental Photgraphy Masterclass"},
           { time: "12:00", t: "FMR Implantology Live Surgery - Hands on"},
@@ -285,23 +294,23 @@ export function Program() {
           { time: "12:00", t: "Digital Workflow Prosthodontics 3D Printing"},
           { time: "18:00", t: "3D Printed Prosthetics Patient Delivery - Hands on"},
           { time: "20:00"},
-        ];
+        ]);
       case 5:
-        return [
+        return withDetails([
           { time: "09:00", t: "Research Masterclass - Advance Topics"},
           { time: "12:00", t: "FMR Implantology Live Surgery - Hands on"},
           { time: "12:00", t: "Digital Workflow Prosthodontics 3D Printing"},
           { time: "18:00", t: "3D Printed Prosthetics Patient Delivery - Hands on"},
           { time: "20:00"},
-        ];
+        ]);
       case 6:
-        return [
+        return withDetails([
           { time: "09:00", t: "FMR Implantology Live Surgery - Hands on"},
           { time: "12:00", t: "FMR Implantology Live Surgery - Continued Hands on"},
           { time: "18:00", t: "3D Printed Prosthetics Patient Delivery - Hands on"},
           { time: "21:00", t: "Victory Gala Party - Certificate and Awards Night"},
           { time: "23:59"},
-        ];
+        ]);
       default:
         return [];
     }
@@ -325,18 +334,18 @@ export function Program() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.06, duration: 0.6 }}
-              className={`w-full grid md:grid-cols-[180px_1fr] gap-6 p-5 md:p-6 border transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group ${
+              className={`w-full grid gap-5 border p-4 text-left transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group sm:p-5 md:grid-cols-[180px_1fr] md:gap-6 md:p-6 ${
                 expandedDay === i
                   ? "border-[var(--gold)]/50 bg-[var(--burgundy)]/40"
                   : "border-[var(--gold)]/15 hover:border-[var(--gold)]/50 bg-[var(--burgundy)]/20 hover:bg-[var(--burgundy)]/40"
               }`}
             >
               <div className="text-left">
-                <div className="font-display text-3xl gradient-gold-text">{d.d}</div>
+                <div className="font-display text-2xl gradient-gold-text sm:text-3xl">{d.d}</div>
                 <div className="text-xs uppercase tracking-[0.3em] text-[var(--ivory)]/60 mt-1">{d.date}</div>
               </div>
               <div>
-                <h3 className="font-display text-2xl text-[var(--ivory)]">{d.t}</h3>
+                <h3 className="font-display text-xl text-[var(--ivory)] sm:text-2xl">{d.t}</h3>
                 <div className="mt-4 text-xs uppercase tracking-[0.2em] text-[var(--gold)]/70">
                   {expandedDay === i ? "Collapse details ↑" : "View timeline →"}
                 </div>
@@ -637,9 +646,9 @@ export function Pricing({ onReserve }: { onReserve: (item: CartItemPayload) => v
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
-            className={`relative p-8 flex flex-col ${
+            className={`relative flex flex-col p-6 sm:p-8 ${
               t.featured
-                ? "border-2 border-[var(--gold)] bg-[var(--burgundy)]/60 shadow-gold scale-105"
+                ? "border-2 border-[var(--gold)] bg-[var(--burgundy)]/60 shadow-gold md:scale-105"
                 : "border border-[var(--gold)]/20 bg-[var(--burgundy)]/20"
             }`}
           >
@@ -745,7 +754,7 @@ export function Jaipur() {
 /* ---------------- FINAL CTA ---------------- */
 export function FinalCTA() {
   return (
-    <section id="cta" className="relative py-32 px-6 overflow-hidden bg-[var(--burgundy-deep)]">
+    <section id="cta" className="relative overflow-hidden bg-[var(--burgundy-deep)] px-4 py-20 sm:px-6 sm:py-24 md:py-32">
       <div
         className="absolute inset-0 opacity-15"
         style={{ backgroundImage: "url(/images/jaipur-pattern.jpg)", backgroundSize: "cover", backgroundPosition: "center" }}
@@ -753,22 +762,22 @@ export function FinalCTA() {
       <div className="absolute inset-0 bg-gradient-to-t from-[var(--burgundy-deep)] via-[var(--burgundy-deep)]/70 to-[var(--burgundy-deep)]" />
       <div className="relative mx-auto max-w-4xl text-center">
         <SectionLabel>Final Call</SectionLabel>
-        <h2 className="mt-6 font-display text-5xl md:text-7xl text-[var(--ivory)] leading-tight">
+        <h2 className="mt-5 font-display text-4xl leading-tight text-[var(--ivory)] sm:text-5xl md:mt-6 md:text-7xl">
           Take Your Seat in <span className="gradient-gold-text">History</span>
         </h2>
-        <p className="mt-8 font-serif italic text-xl text-[var(--ivory)]/75 max-w-2xl mx-auto">
+        <p className="mx-auto mt-6 max-w-2xl font-serif text-lg italic text-[var(--ivory)]/75 sm:mt-8 sm:text-xl">
           Limited to 200 surgeons. The cortex unites only once. The Pink City awaits.
         </p>
-        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-5">
+        <div className="mt-10 flex flex-col items-stretch justify-center gap-4 sm:mt-12 sm:flex-row sm:items-center sm:gap-5">
           <a
             href="#pricing"
-            className="px-12 py-5 bg-[var(--gold)] text-[var(--burgundy-deep)] uppercase tracking-[0.3em] text-xs font-medium shadow-gold hover:shadow-luxe transition-all"
+            className="px-6 py-4 text-center text-[11px] font-medium uppercase tracking-[0.26em] bg-[var(--gold)] text-[var(--burgundy-deep)] shadow-gold transition-all hover:shadow-luxe sm:px-10 sm:py-5 sm:text-xs sm:tracking-[0.3em]"
           >
             Register Now →
           </a>
           <a
             href="tel:+917722840535"
-            className="px-12 py-5 border border-[var(--gold)]/60 text-[var(--gold)] uppercase tracking-[0.3em] text-xs hover:bg-[var(--gold)]/10 transition-all"
+            className="px-6 py-4 text-center text-[11px] uppercase tracking-[0.26em] border border-[var(--gold)]/60 text-[var(--gold)] transition-all hover:bg-[var(--gold)]/10 sm:px-10 sm:py-5 sm:text-xs sm:tracking-[0.3em]"
           >
             Call +91 7976819687
           </a>
@@ -785,7 +794,7 @@ export function FinalCTA() {
           </div>
           <div>
             <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--gold)]">Email</div>
-            <a href="mailto:titanium@corticocore.com" className="mt-2 font-display text-lg text-[var(--ivory)] hover:text-[var(--gold)] block" style={{ textTransform: "lowercase" }}>
+            <a href="mailto:titanium@corticocore.com" className="mt-2 block font-display text-lg lowercase text-[var(--ivory)] hover:text-[var(--gold)]">
               titanium@corticocore.com
             </a>
           </div>

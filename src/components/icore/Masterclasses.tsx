@@ -363,40 +363,72 @@ function DetailPanel({ data }: { data: MasterclassData }) {
 }
 
 export function MasterclassesSection() {
-  const [active, setActive] = useState(0);
-  const current = masterclasses[active];
+  const [active, setActive] = useState<number | null>(0);
 
   return (
-    <div className="grid gap-8 md:grid-cols-[280px_1fr]">
-      <div className="space-y-2">
-        {masterclasses.map((it, i) => (
-          <button
-            key={it.tag}
-            type="button"
-            onClick={() => setActive(i)}
-            className={`w-full border p-5 text-left transition-all duration-300 ${
-              active === i
-                ? "border-[var(--gold)] bg-[var(--burgundy)]/60 shadow-gold"
-                : "border-[var(--gold)]/15 bg-[var(--burgundy)]/20 hover:border-[var(--gold)]/40"
-            }`}
-          >
-            <div className="flex items-center gap-3">
+    <div className="relative mx-auto max-w-5xl">
+      <div className="pointer-events-none absolute bottom-0 left-[17px] top-4 w-px bg-[var(--gold)]/25 sm:left-6" />
+      <div className="space-y-6 sm:space-y-8">
+        {masterclasses.map((it, i) => {
+          const isOpen = active === i;
+          return (
+            <div key={it.tag} className="relative pl-10 sm:pl-16">
               <span
-                className={`font-display text-2xl ${active === i ? "text-[var(--gold)]" : "text-[var(--ivory)]/40"}`}
+                className={`absolute left-0 top-5 z-10 flex h-9 w-9 items-center justify-center rounded-full border text-xs font-semibold transition-all sm:left-2 sm:h-8 sm:w-8 ${
+                  isOpen
+                    ? "border-[var(--gold)] bg-[var(--gold)] text-[var(--burgundy-deep)]"
+                    : "border-[var(--gold)]/50 bg-[var(--burgundy-deep)] text-[var(--gold)]"
+                }`}
               >
                 {it.tag}
               </span>
-              <span className="font-display text-sm leading-snug text-[var(--ivory)] md:text-base">
-                {it.title}
-              </span>
-            </div>
-          </button>
-        ))}
-      </div>
+              <button
+                type="button"
+                onClick={() => setActive(isOpen ? null : i)}
+                className={`w-full border p-4 text-left transition-all duration-300 sm:p-6 ${
+                  isOpen
+                    ? "border-[var(--gold)]/60 bg-[var(--burgundy)]/55 shadow-gold"
+                    : "border-[var(--gold)]/20 bg-[var(--burgundy)]/25 hover:border-[var(--gold)]/45 hover:bg-[var(--burgundy)]/40"
+                }`}
+              >
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <h3 className="font-display text-lg leading-tight text-[var(--ivory)] sm:text-2xl">
+                    {it.title}
+                  </h3>
+                  <span className="text-[10px] uppercase tracking-[0.24em] text-[var(--gold-soft)] sm:text-xs">
+                    {it.duration}
+                  </span>
+                </div>
+                {it.subtitle && (
+                  <p className="mt-2 text-[10px] uppercase tracking-[0.24em] text-[var(--gold)]/80 sm:text-xs">
+                    {it.subtitle}
+                  </p>
+                )}
+                <p className="mt-3 text-sm leading-relaxed text-[var(--ivory)]/75 sm:text-base">
+                  {it.description}
+                </p>
+                <div className="mt-4 text-[10px] uppercase tracking-[0.22em] text-[var(--gold)]/80 sm:text-xs">
+                  {isOpen ? "Hide Details ↑" : "View Details →"}
+                </div>
+              </button>
 
-      <AnimatePresence mode="wait">
-        <DetailPanel key={current.tag} data={current} />
-      </AnimatePresence>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0, y: -6 }}
+                    animate={{ opacity: 1, height: "auto", y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -6 }}
+                    transition={{ duration: 0.45, ease: easePremium }}
+                    className="overflow-hidden pt-4"
+                  >
+                    <DetailPanel data={it} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
