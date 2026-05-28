@@ -570,15 +570,15 @@ export function Research() {
 /* ---------------- VENUE ---------------- */
 export function Venue() {
   const f = [
-    { t: "Auditorium", d: "500+ capacity · Tiered seating · 4K projection", n: "01" },
-    { t: "Mega OT", d: "6 surgical chairs · Live broadcast · Sterile zones", n: "02" },
-    { t: "War Room", d: "Case planning · CBCT review · Mentor pods", n: "03" },
-    { t: "Food Court", d: "Royal Rajasthani cuisine · Networking lounges", n: "04" },
-    { t: "Trade Fair", d: "Premium exhibitors • Live product demos • Innovation showcase", n: "05" },
+    { t: "Auditorium", d: "500+ capacity · Tiered seating · 4K projection", n: "01", img: "/images/Venue/Auditorium.jpeg" },
+    { t: "Mega OT", d: "6 surgical chairs · Live broadcast · Sterile zones", n: "02", img: "/images/Venue/Mega OT.jpeg" },
+    { t: "War Room", d: "Case planning · CBCT review · Mentor pods", n: "03", img: "/images/Venue/War room.jpeg" },
+    { t: "Food Court", d: "Royal Rajasthani cuisine · Networking lounges", n: "04", img: "/images/Venue/Food court.jpeg" },
+    { t: "Trade Fair", d: "Premium exhibitors • Live product demos • Innovation showcase", n: "05", img: "/images/Venue/Trade Fair.jpeg" },
   ];
   return (
     <SectionShell id="venue" label="The Ground" title="Venue · SIAM Institute , Jaipur" dark>
-      <div className="grid md:grid-cols-4 gap-6">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {f.map((x, i) => (
           <motion.div
             key={x.t}
@@ -586,12 +586,22 @@ export function Venue() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
-            className="p-8 border border-[var(--gold)]/20 hover:border-[var(--gold)]/60 bg-[var(--burgundy)]/30 hover:bg-[var(--burgundy)]/50 transition-all group"
+            className="group overflow-hidden border border-[var(--gold)]/20 bg-[var(--burgundy)]/30 transition-all hover:border-[var(--gold)]/60 hover:bg-[var(--burgundy)]/50"
           >
-            <div className="font-display text-5xl gradient-gold-text">{x.n}</div>
-            <div className="gold-divider my-4" />
-            <h3 className="font-display text-xl text-[var(--ivory)]">{x.t}</h3>
-            <p className="mt-2 text-sm text-[var(--ivory)]/65">{x.d}</p>
+            <div className="aspect-[16/10] overflow-hidden">
+              <img
+                src={x.img}
+                alt={x.t}
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+            <div className="p-5 md:p-6">
+              <div className="font-display text-3xl gradient-gold-text">{x.n}</div>
+              <div className="gold-divider my-3" />
+              <h3 className="font-display text-xl text-[var(--ivory)]">{x.t}</h3>
+              <p className="mt-2 text-sm text-[var(--ivory)]/70">{x.d}</p>
+            </div>
           </motion.div>
         ))}
       </div>
@@ -600,7 +610,17 @@ export function Venue() {
 }
 
 /* ---------------- PRICING ---------------- */
-export function Pricing({ onReserve }: { onReserve: (item: CartItemPayload) => void }) {
+export function Pricing({
+  onReserve,
+  cartItems = [],
+  onIncreaseQuantity,
+  onDecreaseQuantity,
+}: {
+  onReserve: (item: CartItemPayload) => void;
+  cartItems?: Array<{ id: string; quantity: number }>;
+  onIncreaseQuantity?: (id: string) => void;
+  onDecreaseQuantity?: (id: string) => void;
+}) {
   const tiers = [
     {
       id: "conference",
@@ -659,7 +679,12 @@ export function Pricing({ onReserve }: { onReserve: (item: CartItemPayload) => v
             )}
             <div className="text-xs uppercase tracking-[0.3em] text-[var(--gold)]">{t.tagline}</div>
             <h3 className="mt-3 font-display text-2xl text-[var(--ivory)]">{t.t}</h3>
-            <div className="mt-4 font-display text-4xl gradient-gold-text">{t.p}</div>
+            <div className="mt-4 flex flex-wrap items-end gap-2">
+              <div className="font-display text-4xl gradient-gold-text">{t.p}</div>
+              <div className="pb-1 text-[10px] uppercase tracking-[0.16em] text-[var(--ivory)]/65">
+                Excluding 18% GST
+              </div>
+            </div>
             <div className="gold-divider my-6" />
             <ul className="space-y-3 flex-1">
               {t.features.map((f) => (
@@ -668,9 +693,34 @@ export function Pricing({ onReserve }: { onReserve: (item: CartItemPayload) => v
                 </li>
               ))}
             </ul>
-            <button type="button" onClick={() => onReserve({ id: t.id, title: t.t, label: t.p, price: t.price, source: "Tier" })} className={reserveButtonClasses}>
-              Reserve →
-            </button>
+            {(() => {
+              const currentQty = cartItems.find((item) => item.id === t.id)?.quantity ?? 0;
+              return currentQty > 0 ? (
+                <div className="mt-8 flex w-full items-center justify-center gap-3 rounded-xl border border-[var(--gold)]/70 bg-[var(--burgundy)] px-4 py-2">
+                  <button
+                    type="button"
+                    aria-label={`Decrease ${t.t} quantity`}
+                    onClick={() => onDecreaseQuantity?.(t.id)}
+                    className="h-9 w-9 rounded-full border border-[var(--gold)]/60 text-lg text-[var(--ivory)] transition hover:bg-[var(--gold)]/15"
+                  >
+                    −
+                  </button>
+                  <span className="min-w-6 text-center font-display text-xl text-[var(--gold)]">{currentQty}</span>
+                  <button
+                    type="button"
+                    aria-label={`Increase ${t.t} quantity`}
+                    onClick={() => onIncreaseQuantity?.(t.id)}
+                    className="h-9 w-9 rounded-full border border-[var(--gold)]/60 text-lg text-[var(--ivory)] transition hover:bg-[var(--gold)]/15"
+                  >
+                    +
+                  </button>
+                </div>
+              ) : (
+                <button type="button" onClick={() => onReserve({ id: t.id, title: t.t, label: t.p, price: t.price, source: "Tier" })} className={reserveButtonClasses}>
+                  Reserve →
+                </button>
+              );
+            })()}
           </motion.div>
         ))}
       </div>
@@ -679,7 +729,17 @@ export function Pricing({ onReserve }: { onReserve: (item: CartItemPayload) => v
 }
 
 /* ---------------- ADD-ONS ---------------- */
-export function AddOns({ onReserve }: { onReserve: (item: CartItemPayload) => void }) {
+export function AddOns({
+  onReserve,
+  cartItems = [],
+  onIncreaseQuantity,
+  onDecreaseQuantity,
+}: {
+  onReserve: (item: CartItemPayload) => void;
+  cartItems?: Array<{ id: string; quantity: number }>;
+  onIncreaseQuantity?: (id: string) => void;
+  onDecreaseQuantity?: (id: string) => void;
+}) {
   const items = [
     { id: "3d-print", t: "3D Printing Workshop", p: "+ ₹19,999", price: 19999, d: "2-day intensive · Bring your own scanner files." },
     { id: "zygomatic", t: "Zygomatic Add-On", p: "+ ₹7,999", price: 7999, d: "Cadaver lab + extended live OT access." },
@@ -701,9 +761,34 @@ export function AddOns({ onReserve }: { onReserve: (item: CartItemPayload) => vo
             <h3 className="font-display text-lg text-[var(--ivory)]">{it.t}</h3>
             <div className="mt-3 font-display text-2xl gradient-gold-text">{it.p}</div>
             <p className="mt-3 text-sm text-[var(--ivory)]/65">{it.d}</p>
-            <button type="button" onClick={() => onReserve({ id: it.id, title: it.t, label: it.p, price: it.price, source: "Add-on" })} className={reserveButtonClasses}>
-              Reserve →
-            </button>
+            {(() => {
+              const currentQty = cartItems.find((item) => item.id === it.id)?.quantity ?? 0;
+              return currentQty > 0 ? (
+                <div className="mt-8 flex w-full items-center justify-center gap-3 rounded-xl border border-[var(--gold)]/70 bg-[var(--burgundy)] px-4 py-2">
+                  <button
+                    type="button"
+                    aria-label={`Decrease ${it.t} quantity`}
+                    onClick={() => onDecreaseQuantity?.(it.id)}
+                    className="h-9 w-9 rounded-full border border-[var(--gold)]/60 text-lg text-[var(--ivory)] transition hover:bg-[var(--gold)]/15"
+                  >
+                    −
+                  </button>
+                  <span className="min-w-6 text-center font-display text-xl text-[var(--gold)]">{currentQty}</span>
+                  <button
+                    type="button"
+                    aria-label={`Increase ${it.t} quantity`}
+                    onClick={() => onIncreaseQuantity?.(it.id)}
+                    className="h-9 w-9 rounded-full border border-[var(--gold)]/60 text-lg text-[var(--ivory)] transition hover:bg-[var(--gold)]/15"
+                  >
+                    +
+                  </button>
+                </div>
+              ) : (
+                <button type="button" onClick={() => onReserve({ id: it.id, title: it.t, label: it.p, price: it.price, source: "Add-on" })} className={reserveButtonClasses}>
+                  Reserve →
+                </button>
+              );
+            })()}
           </motion.div>
         ))}
       </div>

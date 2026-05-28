@@ -46,8 +46,18 @@ export function HomePage() {
       <Masterclasses />
       <Research />
       <Venue />
-      <Pricing onReserve={handleReserve} />
-      <AddOns onReserve={handleReserve} />
+      <Pricing
+        onReserve={handleReserve}
+        cartItems={items}
+        onIncreaseQuantity={increaseQuantity}
+        onDecreaseQuantity={decreaseQuantity}
+      />
+      <AddOns
+        onReserve={handleReserve}
+        cartItems={items}
+        onIncreaseQuantity={increaseQuantity}
+        onDecreaseQuantity={decreaseQuantity}
+      />
       <Jaipur />
       <FinalCTA />
       <Footer />

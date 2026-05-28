@@ -14,18 +14,65 @@ const checkoutSchema = z.object({
     .min(10, "Enter a valid phone number")
     .regex(/^[0-9+\-\s()]{10,15}$/, "Enter a valid phone number"),
   email: z.string().email("Enter a valid email address"),
-  institute: z.string().min(2, "Enter your institute or organization"),
+  qualification: z.string().min(2, "Enter your qualification"),
+  implantExperience: z.string().min(1, "Select your implant experience"),
+  additionalInfo: z.string().optional(),
 });
 
 type CheckoutForm = z.infer<typeof checkoutSchema>;
 
 const inputClass =
   "mt-2 w-full rounded-xl border border-[var(--gold)]/25 bg-[var(--burgundy)]/40 px-4 py-3 text-sm text-[var(--ivory)] placeholder:text-[var(--ivory)]/40 focus:border-[var(--gold)]/60 focus:outline-none focus:ring-1 focus:ring-[var(--gold)]/40";
+const selectClass =
+  "mt-2 w-full rounded-xl border border-[var(--gold)]/25 bg-[var(--burgundy)]/40 px-4 py-3 text-sm text-[var(--ivory)] focus:border-[var(--gold)]/60 focus:outline-none focus:ring-1 focus:ring-[var(--gold)]/40";
+
+const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbyi5RxfH-2meKKYGJpHsDqrxyNSW1Qp7cpJDCSpXT3lr7rNv-RvOmqOGhkt5dQQVElHnw/exec";
+
+async function submitToGoogleSheet(payload: {
+  name: string;
+  email: string;
+  phone: string;
+  qualification: string;
+  implantExperience: string;
+  additionalInfo: string;
+  paymentId: string;
+  orderId: string;
+  paymentStatus: string;
+}) {
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error("Primary request failed");
+    }
+    return;
+  } catch {
+    // Fallback for strict Apps Script CORS behavior (opaque response in no-cors mode).
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
+      body: JSON.stringify(payload),
+    });
+  }
+}
 
 export function CheckoutPage() {
   const navigate = useNavigate();
   const { items, clearCart } = useCart();
   const [payError, setPayError] = useState("");
+  const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState("");
+  const [isSubmittingForm, setIsSubmittingForm] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
 
   const summary = getOrderSummary(items);
@@ -33,6 +80,7 @@ export function CheckoutPage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<CheckoutForm>({
     resolver: zodResolver(checkoutSchema),
@@ -55,6 +103,8 @@ export function CheckoutPage() {
 
   const onSubmit = async (data: CheckoutForm) => {
     setPayError("");
+    setSubmitError("");
+    setSubmitSuccess("");
     setIsPaying(true);
 
     try {
@@ -76,11 +126,27 @@ export function CheckoutPage() {
         amount: order.amount,
         currency: order.currency,
         customer: data,
-        institute: data.institute,
+        institute: data.qualification,
         onDismiss: () => setIsPaying(false),
         onSuccess: async (payment) => {
           try {
             await verifyPayment(payment);
+            setIsSubmittingForm(true);
+
+            await submitToGoogleSheet({
+              name: data.name,
+              email: data.email,
+              phone: data.phone,
+              qualification: data.qualification,
+              implantExperience: data.implantExperience,
+              additionalInfo: data.additionalInfo ?? "",
+              paymentId: payment.razorpay_payment_id,
+              orderId: order.orderId,
+              paymentStatus: "success",
+            });
+
+            setSubmitSuccess("Payment confirmed and details submitted successfully.");
+            reset();
             clearCart();
             navigate("/payment/success", {
               state: {
@@ -89,8 +155,11 @@ export function CheckoutPage() {
               },
             });
           } catch (err) {
+            setSubmitError("Payment is successful but saving details to sheet failed. Please contact support with your payment ID.");
             setPayError(err instanceof Error ? err.message : "Payment verification failed");
             setIsPaying(false);
+          } finally {
+            setIsSubmittingForm(false);
           }
         },
       });
@@ -173,18 +242,76 @@ export function CheckoutPage() {
 
               <div>
                 <label className="text-xs uppercase tracking-[0.3em] text-[var(--gold)]/90">
-                  Institute / organization
+                  Qualification
                 </label>
-                <input
-                  className={inputClass}
-                  placeholder="SIAM Institute, Jaipur"
-                  {...register("institute")}
-                />
-                {errors.institute && (
-                  <p className="mt-2 text-xs text-red-300">{errors.institute.message}</p>
+                <select className={selectClass} defaultValue="" {...register("qualification")}>
+                  <option value="" disabled style={{ color: "#111827", backgroundColor: "#ffffff" }}>
+                    Select qualification
+                  </option>
+                  <option value="BDS" style={{ color: "#111827", backgroundColor: "#ffffff" }}>
+                    BDS
+                  </option>
+                  <option value="MDS" style={{ color: "#111827", backgroundColor: "#ffffff" }}>
+                    MDS
+                  </option>
+                  <option value="BDS + Diploma" style={{ color: "#111827", backgroundColor: "#ffffff" }}>
+                    BDS + Diploma
+                  </option>
+                  <option value="Other" style={{ color: "#111827", backgroundColor: "#ffffff" }}>
+                    Other
+                  </option>
+                </select>
+                {errors.qualification && (
+                  <p className="mt-2 text-xs text-red-300">{errors.qualification.message}</p>
                 )}
               </div>
+
+              <div>
+                <label className="text-xs uppercase tracking-[0.3em] text-[var(--gold)]/90">
+                  Implant experience
+                </label>
+                <select className={selectClass} defaultValue="" {...register("implantExperience")}>
+                  <option value="" disabled style={{ color: "#111827", backgroundColor: "#ffffff" }}>
+                    Select experience level
+                  </option>
+                  <option value="Beginner" style={{ color: "#111827", backgroundColor: "#ffffff" }}>
+                    Beginner
+                  </option>
+                  <option value="Intermediate" style={{ color: "#111827", backgroundColor: "#ffffff" }}>
+                    Intermediate
+                  </option>
+                  <option value="Advanced" style={{ color: "#111827", backgroundColor: "#ffffff" }}>
+                    Advanced
+                  </option>
+                </select>
+                {errors.implantExperience && (
+                  <p className="mt-2 text-xs text-red-300">{errors.implantExperience.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="text-xs uppercase tracking-[0.3em] text-[var(--gold)]/90">
+                  Additional information
+                </label>
+                <textarea
+                  className={`${inputClass} min-h-28 resize-y`}
+                  placeholder="Anything you'd like us to know before registration."
+                  {...register("additionalInfo")}
+                />
+              </div>
             </div>
+
+            {submitSuccess && (
+              <p className="mt-6 rounded-xl border border-emerald-400/30 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-200">
+                {submitSuccess}
+              </p>
+            )}
+
+            {submitError && (
+              <p className="mt-6 rounded-xl border border-red-400/30 bg-red-950/30 px-4 py-3 text-sm text-red-200">
+                {submitError}
+              </p>
+            )}
 
             {payError && (
               <p className="mt-6 rounded-xl border border-red-400/30 bg-red-950/30 px-4 py-3 text-sm text-red-200">
@@ -194,10 +321,14 @@ export function CheckoutPage() {
 
             <button
               type="submit"
-              disabled={isPaying}
+              disabled={isPaying || isSubmittingForm}
               className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[var(--gold)] px-5 py-4 text-xs uppercase tracking-[0.35em] text-[var(--burgundy-deep)] shadow-gold transition hover:bg-[var(--gold-soft)] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isPaying ? "Opening payment…" : `Pay ${formatCurrency(summary.total)} via Razorpay`}
+              {isSubmittingForm
+                ? "Submitting details…"
+                : isPaying
+                  ? "Opening payment…"
+                  : `Pay ${formatCurrency(summary.total)} via Razorpay`}
             </button>
           </form>
 

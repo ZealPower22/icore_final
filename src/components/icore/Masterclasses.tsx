@@ -223,9 +223,9 @@ function DetailPanel({ data }: { data: MasterclassData }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.5, ease: easePremium }}
-      className="ornament-frame overflow-hidden glass"
+      className="ornament-frame overflow-hidden border border-[var(--gold)]/35 bg-[var(--burgundy-deep)]/85 shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
     >
-      <div className="border-b border-[var(--gold)]/15 bg-[var(--burgundy)]/25 p-6 md:p-8">
+      <div className="border-b border-[var(--gold)]/30 bg-[var(--burgundy)]/45 p-6 md:p-8">
         <div className="flex flex-wrap items-center gap-3">
           <span className="font-display text-2xl text-[var(--gold)]">{data.tag}</span>
           {data.badge && (
@@ -243,7 +243,7 @@ function DetailPanel({ data }: { data: MasterclassData }) {
         <p className="mt-4 text-sm uppercase tracking-[0.2em] text-[var(--gold-soft)]">
           {data.duration}
         </p>
-        <p className="mt-4 font-serif text-base leading-relaxed text-[var(--ivory)]/75 md:text-lg">
+        <p className="mt-4 font-serif text-base leading-relaxed text-[var(--ivory)]/90 md:text-lg">
           {data.description}
         </p>
         {data.quote && (
@@ -255,7 +255,7 @@ function DetailPanel({ data }: { data: MasterclassData }) {
 
       <SpeakerBlock speaker={data.speaker} />
 
-      <div className="space-y-8 p-6 md:p-8">
+      <div className="space-y-8 bg-[var(--burgundy-deep)]/70 p-6 md:p-8">
         {data.highlights && (
           <section>
             <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">
@@ -266,7 +266,7 @@ function DetailPanel({ data }: { data: MasterclassData }) {
               {data.highlights.map((group) => (
                 <div
                   key={group.title}
-                  className="border border-[var(--gold)]/10 bg-[var(--burgundy)]/20 p-4 md:p-5"
+                  className="border border-[var(--gold)]/25 bg-[var(--burgundy)]/45 p-4 md:p-5"
                 >
                   <h6 className="font-display text-sm text-[var(--ivory)] md:text-base">
                     {group.title}
@@ -300,7 +300,7 @@ function DetailPanel({ data }: { data: MasterclassData }) {
               {data.protocolItems.map((item) => (
                 <div
                   key={item}
-                  className="flex items-start gap-2 border border-[var(--gold)]/10 bg-[var(--burgundy)]/20 px-3 py-2.5 text-sm text-[var(--ivory)]/80"
+                  className="flex items-start gap-2 border border-[var(--gold)]/25 bg-[var(--burgundy)]/45 px-3 py-2.5 text-sm text-[var(--ivory)]/90"
                 >
                   <span className="text-[var(--gold)]">◆</span>
                   {item}
@@ -341,19 +341,19 @@ function DetailPanel({ data }: { data: MasterclassData }) {
             {data.format.map((row) => (
               <div
                 key={row.label}
-                className="border border-[var(--gold)]/15 bg-[var(--burgundy-deep)]/40 px-4 py-3"
+                className="border border-[var(--gold)]/30 bg-[var(--burgundy)]/35 px-4 py-3"
               >
                 <div className="text-[10px] uppercase tracking-[0.25em] text-[var(--gold)]/70">
                   {row.label}
                 </div>
-                <div className="mt-1 text-sm text-[var(--ivory)]/85">{row.value}</div>
+                <div className="mt-1 text-sm text-[var(--ivory)]/95">{row.value}</div>
               </div>
             ))}
           </div>
         </section>
 
         {data.footerQuote && (
-          <blockquote className="border border-[var(--gold)]/20 bg-[var(--burgundy)]/30 p-5 text-center font-serif text-base italic text-[var(--gold-soft)] md:text-lg">
+          <blockquote className="border border-[var(--gold)]/35 bg-[var(--burgundy)]/50 p-5 text-center font-serif text-base italic text-[var(--gold-soft)] md:text-lg">
             &ldquo;{data.footerQuote}&rdquo;
           </blockquote>
         )}
