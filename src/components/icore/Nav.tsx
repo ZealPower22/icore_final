@@ -18,12 +18,16 @@ export function Nav({
   onOpenCart?: () => void;
 }) {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const closeMobileMenu = () => setMobileOpen(false);
 
   return (
     <nav
@@ -40,7 +44,7 @@ export function Nav({
             <div className="font-display text-sm tracking-[0.3em] text-[var(--ivory)]">
               I.C.O.R.E
             </div>
-            <div className="text-[10px] tracking-[0.3em] text-[var(--gold)]/80">JAIPUR · 2026</div>
+            <div className="text-[10px] tracking-[0.3em] text-[var(--gold)]">JAIPUR · 2026</div>
           </div>
         </a>
         <div className="hidden lg:flex items-center gap-8 flex-1 justify-center">
@@ -48,7 +52,7 @@ export function Nav({
             <a
               key={l.href}
               href={l.href}
-              className="text-xs uppercase tracking-[0.25em] text-[var(--ivory)]/80 hover:text-[var(--gold)] transition-colors"
+              className="text-xs uppercase tracking-[0.25em] text-[var(--ivory)] hover:text-[var(--gold)] transition-colors"
             >
               {l.label}
             </a>
@@ -67,6 +71,14 @@ export function Nav({
               {cartCount}
             </span>
           </button>
+          <button
+            type="button"
+            onClick={() => setMobileOpen((prev) => !prev)}
+            aria-label="Toggle navigation menu"
+            className="inline-flex lg:hidden items-center justify-center rounded-full border border-[var(--gold)]/40 bg-[var(--burgundy-deep)]/80 px-3 py-2 text-[var(--gold)] transition-all hover:bg-[var(--gold)]/10"
+          >
+            <span className="text-sm uppercase tracking-[0.2em]">{mobileOpen ? "Close" : "Menu"}</span>
+          </button>
           <a
             href="#pricing"
             className="text-xs uppercase tracking-[0.25em] px-5 py-3 border border-[var(--gold)]/60 text-[var(--gold)] hover:bg-[var(--gold)] hover:text-[var(--burgundy-deep)] transition-all duration-300"
@@ -75,6 +87,34 @@ export function Nav({
           </a>
         </div>
       </div>
+      {mobileOpen && (
+        <div className="mx-auto mt-4 max-w-7xl px-6 lg:hidden">
+          <div className="rounded-2xl border border-[var(--gold)]/20 bg-[var(--burgundy-deep)]/95 p-4 shadow-luxe">
+            <div className="grid grid-cols-2 gap-2">
+              {links.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  onClick={closeMobileMenu}
+                  className="rounded-lg border border-[var(--gold)]/15 px-3 py-2 text-center text-[11px] uppercase tracking-[0.2em] text-[var(--ivory)] transition-colors hover:border-[var(--gold)]/50 hover:text-[var(--gold)]"
+                >
+                  {l.label}
+                </a>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                closeMobileMenu();
+                onOpenCart?.();
+              }}
+              className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-[var(--gold)]/40 bg-[var(--burgundy)]/60 px-3 py-2 text-xs uppercase tracking-[0.25em] text-[var(--gold)] hover:bg-[var(--gold)]/10"
+            >
+              Cart ({cartCount})
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

@@ -879,7 +879,7 @@ export function FinalCTA() {
           </div>
           <div>
             <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--gold)]">Email</div>
-            <a href="mailto:titanium@corticocore.com" className="mt-2 block font-display text-lg lowercase text-[var(--ivory)] hover:text-[var(--gold)]">
+            <a href="mailto:titanium@corticocore.com" className="mt-2 block font-sans text-lg normal-case tracking-normal text-[var(--ivory)] hover:text-[var(--gold)]">
               titanium@corticocore.com
             </a>
           </div>
