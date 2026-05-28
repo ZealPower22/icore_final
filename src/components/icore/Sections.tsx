@@ -225,7 +225,7 @@ export function Program() {
   
   const days = [
     { d: "Day 1", t: "Basics of Immediate Loading", date: "21 Nov" },
-    { d: "Day 2", t: " Advanced Biocortical & Tricortical Anchorage", date: "22 Nov" },
+    { d: "Day 2", t: " Advanced Bicortical & Tricortical Anchorage", date: "22 Nov" },
     { d: "Day 3", t: "Camp event + Live Patient Hands-On", date: "23 Nov" },
     { d: "Day 4", t: "Camp event + Ozone Masterclass", date: "24 Nov" },
     { d: "Day 5", t: "Camp + Research + Photography", date: "25 Nov" },
@@ -237,18 +237,18 @@ export function Program() {
     switch (index) {
       case 0:
         return [
-          { time: "09:00", t: "Debate Registration & Welcome"},
+          { time: "09:00", t: "Delegate Registration & Welcome"},
           { time: "10:00", t: "Inaugural Lectures - Fundamentals of Immediate loading"},
           { time: "12:30", t: "High Tea / Brunch"},
-          { time: "13:30", t: "Inaugration and Opening Ceremony"},
-          { time: "15:00", t: "Lunch Break"},
-          { time: "16:00", t: "Afternoon Lectures"},
+          { time: "13:00", t: "Inaugration and Opening Ceremony"},
+          { time: "14:00", t: "Lunch Break"},
+          { time: "15:00", t: "Afternoon Lectures"},
           { time: "17:00", t: "Cultural Evening celebrations"},
           { time: "20:00"},
         ];
       case 1:
         return [
-          { time: "09:00", t: "Lectures - Advanced Biocortical & Tricortical Anchorage Concepts"},
+          { time: "09:00", t: "Lectures - Advanced Bicortical & Tricortical Anchorage Concepts"},
           { time: "10:30", t: "High Tea / Brunch"},
           { time: "11:00", t: "Lectures and Continued Advanced Sessions"},
           { time: "12:30", t: "High Tea / Brunch"},
@@ -269,16 +269,16 @@ export function Program() {
         ];
       case 3:
         return [
-          { time: "09:00", t: "Ozone Theraphy Masterclass (Dr. Sudhir Doley)"},
+          { time: "09:00", t: "Ozone Therapy Masterclass (Dr. Sudhir Doley)"},
           { time: "12:00", t: "FMR Implantology Live Surgery - Hands on"},
-          { time: "12:00", t: "Ozone Theraphy Live Patient -  Hands on"},
+          { time: "12:00", t: "Ozone Therapy Live Patient -  Hands on"},
           { time: "12:00", t: "Digital Workflow Prosthodontics 3D Printing"},
           { time: "18:00", t: "3D Printed Prosthetics Patient Delivery - Hands on"},
           { time: "20:00"},
         ];
       case 4:
         return [
-          { time: "09:00", t: "Research KAR Masterclass"},
+          { time: "09:00", t: "Research Masterclass"},
           { time: "09:00", t: "Dental Photgraphy Masterclass"},
           { time: "12:00", t: "FMR Implantology Live Surgery - Hands on"},
           { time: "12:00", t: "Dental Photgraphy Hands on - Live Patient demos"},
@@ -288,7 +288,7 @@ export function Program() {
         ];
       case 5:
         return [
-          { time: "09:00", t: "Research Masterclass - Advanced Topics"},
+          { time: "09:00", t: "Research Masterclass - Advance Topics"},
           { time: "12:00", t: "FMR Implantology Live Surgery - Hands on"},
           { time: "12:00", t: "Digital Workflow Prosthodontics 3D Printing"},
           { time: "18:00", t: "3D Printed Prosthetics Patient Delivery - Hands on"},
@@ -382,13 +382,19 @@ export function Faculty() {
 
   const groups: { title: string; members: FacultyMember[] }[] = [
     {
-      title: "Specialist Faculty",
+      title: "Key Note Speakers",
       members: [
+        { n: "Dr. Rajesh Bansal", r: "SENIOR PROF. PROSTHODONTICS , BHU", y: "Senior Implantologist  & Professor, Prosthodontics, Faculty of Dental Sciences, IMS, BHU", image: img("Rajesh Bansal.jpeg") },
+        { n: "Dr. Rajesh Sharma", r: "HOD PEDODONTIST , JDC", y: "Mentor for both Two Piece & Single Piece Implantology, 35 + Publications , Done 1000 + Full Rehabilitation.", image: img("rajesh-sharma.jpeg") },
+        { n: "Dr. Johnson Raja James", r: "BDS · MDS · MS(ITALY) · PhD · DIPLOMATEICOI", y: "Implant surgeon & international mentor with 23 years experience in FMR, Pterygoid, & Zygomatic implantology Peri-implant regeneration expert", image: img("Dr. Johnson Raja James.jpeg") },
+        { n: "Dr. Dhruv Arora", r: "BDS , MDS Prosthodontics GDC Pondicherry", y: "Internationally acclaimed Prosthodontist & Implant Surgeon with expertise in advanced implantology, full mouth rehabilitation, and peri-implant regeneration. Trained 2500+ dentists globally in implant dentistry.", image: img("Dr. Dhruv Arora.jpeg") },
+        { n: "Dr. Sumanth Krishna", r: "GOLD MEDALIST· OMFS · IFED TEACHER", y: "Gold Medalist Oral & Maxillofacial Surgeon IFED certified teacher. International experience faculty", image: img("nb-singh.jpeg") },
+        { n: "Dr. Sachin Sachdeva", r: "PROFESSOR & HOD, MAXILLOFACIAL SURGERY", y: "senior Implantologist. Trained 200+ Corticobasal surgeons Published author in strategic implantology", image: img("sachin sachdeva.jpeg") },
         { n: "Dr. Ashish Sethi", r: "MOI SWITZERLAND · MS IMPLANT", y: "FFA · FAFO (Ortho) · FILI London · Master of Oral Implantology", image: img("ashish-sethi.jpeg") },
         { n: "Dr. N.B Singh", r: "SENIOR STRATEGIC IMPLANTOLOGIST", y: "Advanced corticobasal techniques · Clinical mentor", image: img("nb-singh.jpeg") },
-        { n: "Dr. Abhaydeep Singh", r: "IMPLANT DESIGN EXPERT", y: "Bi Cortical Implantologist · 10+ Years · Developing macro-thread designs that dissipate masticatory stress across the basal bone, preventing localized pressure and crestal resorption", image: img("abhaydeep-singh.jpeg") },
         { n: "Dr. Sudhir Doley", r: "PIONEER TRAINER FOR OZONE DENTISTRY IN INDIA", y: "Ozone–Basal Synergy protocol architect · Bio-logical approach advocate", image: img("Dr. Sudhir Doley.jpeg") },
-        { n: "Dr. Shahul Hameed", r: "BDS · MDS PROSTHODONTICS", y: "Ozone Fellow & Diplomate BOCI · Prosthodontic–implant interface · Full-arch specialist", image: img("Shahul Hameed.jpeg") },
+        { n: "Dr. Shahul Hameed", r: "BDS · MDS PROSTHODONTICS", y: "Fellow & Diplomate BOCI · Prosthodontic–implant interface · Full-arch specialist", image: img("Shahul Hameed.jpeg") },
+        { n: "Dr. Shiva Kumar S.A.", r: "BDS · DIGITAL WORKFLOW", y: "Master of 3D Printing and Digital Workflow · Digital dentistry pioneer · 2-day intensive lead", image: img("shiva-kumar.jpeg") },
       ],
     },
     {
@@ -396,6 +402,7 @@ export function Faculty() {
       members: [
         { n: "Dr. Kanak Pareek", r: "BDS MDS OMFR (CPS)", y: "Founder of Metagnostic · Inventor of the Angle Assist and IOPA surgical systems · Project Director of Robotic & Guided Surgery Technical R&D", image: img("Dr. Kanak Pareek.jpeg") },
         { n: "Dr. Ayush Shrivastava", r: "BDS MDS OMFS (CPS)", y: "Bicortical Implantologist · Chief Scientist at Metagnostics · Expert in Robotic Innovations in dental surgery", image: img("Dr. Ayush Shrivastava.jpeg") },
+        { n: "Dr. Abhaydeep Singh", r: "IMPLANT DESIGN EXPERT", y: "Bi Cortical Implantologist · 10+ Years · Developing macro-thread designs that dissipate masticatory stress across the basal bone, preventing localized pressure and crestal resorption", image: img("abhaydeep-singh.jpeg") },
         { n: "Dr. Vishwas Sharma", r: "BI CORTICAL SURGEON", y: "Implantologist · Perioperative Care Specialist", image: img("vishwas-sharma.jpeg") },
         { n: "Dr. Shiva Kumar S.A.", r: "BDS · DIGITAL WORKFLOW", y: "Master of 3D Printing and Digital Workflow · Digital dentistry pioneer · 2-day intensive lead", image: img("shiva-kumar.jpeg") },
       ],
@@ -405,7 +412,7 @@ export function Faculty() {
       members: [
         { n: "Dr. Kanak Pareek", y: "Founder & Chief Innovator · Inventor of the Angle Assist and IOPA surgical systems · Project Director of Robotic & Guided Surgery Technical R&D", image: img("Dr. Kanak Pareek.jpeg") },
         { n: "Dr. Ayush Shrivastava", y: "Founder & Chief Scientist · Bicortical Implantologist · Chief Scientist at Metagnostics · Expert in Robotic Innovations in dental surgery", image: img("Dr. Ayush Shrivastava.jpeg") },
-        { n: "Dr. Kailash Pareek", y: "Senior Physician · Medical Examiner (LIC) · 43 yrs experience", image: img("kailash-pareek.jpeg") },
+        { n: "Dr. Kailash Pareek", y: "Senior Physician · Medical Examiner (LIC) · 43 yrs experience", image: img("Dr.Kalesh Pareek.jpeg") },
         { n: "Dr. Ashish Shrivastava", y: "Senior Dental Surgeon · 35 yrs of clinical experience", image: img("Dr. Ashish Shrivastava.jpeg") },
         { n: "Dr. Manju Shrivastava", y: "Senior Implantologist · 30 years of clinical experience", image: img("Manju Shrivastava.jpeg") },
         { n: "Dr. Sapt Rishi Patel", y: "Oral & Maxillofacial Surgeon · IDA President Alwar", image: img("sapt-rishi-patel.jpeg") },
@@ -445,28 +452,27 @@ export function MedicalPanel() {
       t: "Nuclear Medicine",
       d: "Dr. Shubham Dadhich",
       q: "MBBS · MD NUCLEAR MEDICINE",
-      f: ["Consent counseling", "Short-term satisfaction", "Outcome perception"],
-      image: img("shubham-dadhich.jpeg"),
+      f: ["Certified Biomedical Researcher (ICMR-NIE) · Research methodology & bone density imaging expert"],image: img("shubham-dadhich.jpeg"),
     },
     {
       t: "Bone Health",
       d: "Dr. Divanshu Sharma",
       q: "MBBS · MS ORTHOPEDICS (RES.)",
-      f: ["Endocrinology", "Bisphosphonate management", "Osteoporosis protocols"],
+      f: ["2. Medical Officer · Bone biology, osteoporosis & systemic health in implant patients"],
       image: img("divyanshu-sharma.jpeg"),
     },
     {
       t: "Psychiatry",
       d: "Dr. Aditya Singhal",
       q: "MBBS · MD · DNB PSYCHIATRY",
-      f: ["Patient anxiety", "Body-image rehabilitation", "Behavioral medicine"],
+      f: ["3. Patient psychological readiness · Dental anxiety · Post-surgical mental health"],
       image: img("aditya-singhal.jpeg"),
     },
     {
       t: "Neurology",
       d: "Dr. Love Sharma",
       q: "MBBS · RESIDENT NEUROLOGY",
-      f: ["Cranial nerve protection", "Pain pathways", "TMJ neurology"],
+      f: ["Fortis Escort Hospital Jaipur · Nerve bypass · Neurological contraindications"],
       image: img("love-sharma.jpeg"),
     },
   ];
@@ -593,7 +599,7 @@ export function Pricing({ onReserve }: { onReserve: (item: CartItemPayload) => v
       p: "₹9,999",
       price: 9999,
       tagline: "Observer Pass",
-      features: ["All keynote lectures", "Live surgery viewing", "Digital handouts", "CME certificate"],
+      features: ["Day 1 & 2 full lecture access (21–22 Nov)", "Opening ceremony + scientific sessions", "Gala Night invitation (Day 2 only)"],
     },
     {
       id: "initiate",
@@ -601,7 +607,7 @@ export function Pricing({ onReserve }: { onReserve: (item: CartItemPayload) => v
       p: "₹29,999",
       price: 29999,
       tagline: "Engaged Learner",
-      features: ["Everything in Conference", "Hands-on workshop access", "Cadaver simulation", "Networking dinner"],
+      features: ["5 hands-on implant placementson live patients", "Lectures by Top 5 Mentors (all 7 days)", "Full 7-day event entry", "Lunches Inc."],
     },
     {
       id: "specialist",
@@ -610,7 +616,7 @@ export function Pricing({ onReserve }: { onReserve: (item: CartItemPayload) => v
       price: 49999,
       tagline: "Clinical Path",
       featured: true,
-      features: ["Everything in Initiate", "5–10 implants placement log", "Mentor pairing", "Digital asset pack"],
+      features: ["10 implant placements (1 upper + 1 lower quad)", "Lectures by Top 5 Mentors (all 7 days)", "Full 7-day event entry", "Lunches Inc", "Big Gala Dinner Party (food & drinks)", "Shared CBCT radiographic data access"],
     },
     {
       id: "pro-titan",
@@ -618,7 +624,7 @@ export function Pricing({ onReserve }: { onReserve: (item: CartItemPayload) => v
       p: "₹89,999",
       price: 89999,
       tagline: "All Access · All Glory",
-      features: ["Everything in Specialist", "20+ implant placements", "Indexed publication slot", "Recommendation letter", "Royal gala VIP table"],
+      features: ["1 Complete Full Mouth Rehabilitation", "Lectures by Top 5 Mentors (all 7 days)", "Full 7-day event entry", "Lunches Inc", "Big Gala Dinner Party (food & drinks", "1-on-1 mastership session", "4K Cinematic Case Videos", "CBCT radiographic data access"],
     },
   ];
   return (
@@ -764,7 +770,7 @@ export function FinalCTA() {
             href="tel:+917722840535"
             className="px-12 py-5 border border-[var(--gold)]/60 text-[var(--gold)] uppercase tracking-[0.3em] text-xs hover:bg-[var(--gold)]/10 transition-all"
           >
-            Call +91 77228 40535
+            Call +91 7976819687
           </a>
         </div>
         <Ornament className="mt-16" />
@@ -779,7 +785,7 @@ export function FinalCTA() {
           </div>
           <div>
             <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--gold)]">Email</div>
-            <a href="mailto:titanium@corticocore.com" className="mt-2 font-display text-lg text-[var(--ivory)] hover:text-[var(--gold)] block">
+            <a href="mailto:titanium@corticocore.com" className="mt-2 font-display text-lg text-[var(--ivory)] hover:text-[var(--gold)] block" style={{ textTransform: "lowercase" }}>
               titanium@corticocore.com
             </a>
           </div>
