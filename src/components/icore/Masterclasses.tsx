@@ -110,7 +110,6 @@ const masterclasses: MasterclassData[] = [
         "Implant surgeon, professor, and international certified mentor with 23 years of experience in advanced implantology — FMR, pterygoid & zygomatic — and peri-implant regeneration.",
       image: "images/faculty/Dr. Johnson Raja James.jpeg",
     },
-
     learnItems: [
       "Zygomatic implant indications & anatomy",
       "Zygomatic implant techniques",
@@ -156,6 +155,81 @@ const masterclasses: MasterclassData[] = [
       { label: "Note", value: "Separate add-on course" },
     ],
     badge: "OZONE Therapy",
+  },
+  {
+    tag: "D",
+    title: "Two-Piece Compressive Implantology",
+    subtitle: "BRIDGING TWO SCHOOLS OF THOUGHT",
+    duration: "Day 2 (22 Nov) · Full-Day Workshop",
+    description:
+      "The debate between two-piece conventional implantology and single-piece corticobasal systems has divided implant dentistry for years. This masterclass brings both approaches together in a unified, evidence-based learning environment. Participants will gain a deep understanding of two-piece implant biomechanics, compressive loading principles, osseointegration protocols, and full-arch rehabilitation strategies through lectures, live demonstrations, and hands-on clinical training.",
+    quote:
+      "I.C.O.R.E 2026 does not take sides — it takes evidence.",
+    speaker: {
+      name: "Faculty to be Announced Soon",
+      credentials: "ELITE MENTORS · TWO-PIECE & CONVENTIONAL IMPLANT TRADITIONS",
+      about:
+        "Elite mentors from both Two-Piece and Conventional implant traditions will lead this workshop. Follow @corticocore for speaker announcements.",
+    },
+    modules: [
+      {
+        title: "Module 1 — Foundation",
+        items: [
+          "Anatomy of two-piece implants",
+          "Components and connections",
+          "Compressive loading biology vs osseointegration",
+          "Patient selection and case planning (CBCT-based)",
+          "Implant system overview",
+          "Implant kit walkthrough",
+        ],
+      },
+      {
+        title: "Module 2 — Surgical",
+        items: [
+          "Osteotomy design for compressive anchorage",
+          "Step-by-step placement protocol",
+          "Live practice on phantom/model",
+          "Primary stability measurement",
+          "ISQ vs insertion torque",
+          "Immediate loading vs delayed loading decision tree",
+        ],
+      },
+      {
+        title: "Module 3 — Prosthetics & Live Cases",
+        items: [
+          "Abutment selection",
+          "Torque protocols",
+          "Full-arch rehabilitation planning",
+          "Live patient placement",
+          "Case debriefing",
+          "Post-operative radiograph review",
+        ],
+      },
+    ],
+    learnItems: [
+      "Two-piece implant biomechanics — compressive vs conventional loading principles",
+      "Case selection criteria — when to choose two-piece vs single-piece cortical systems",
+      "Surgical protocol — crestal approach, osteotomy design, primary stability optimization",
+      "Prosthetic connections — abutment engineering, screw torque, anti-rotation concepts",
+      "Conventional osseointegration protocols alongside corticobasal immediate functional loading",
+      "Complication management — crestal bone loss, peri-implantitis, abutment fracture",
+      "Full-arch rehabilitation using two-piece implant systems",
+      "Live patient implant placement under mentor supervision",
+    ],
+    format: [
+      { label: "Day", value: "Day 2 — 22 November 2026 (Saturday)" },
+      { label: "Duration", value: "Full Day · 09:00 AM – 06:00 PM" },
+      { label: "Format", value: "Lecture Sessions + Live Patient Hands-On Training + Clinical Case Demonstrations" },
+      { label: "Venue", value: "Siam Institute, Jaipur" },
+      { label: "Hands-On Station", value: "CITRC, Jaipur" },
+      { label: "Capacity", value: "Limited Seats · Intimate Cohort" },
+      { label: "Take-Home", value: "Case Summary Notes + Annotated Clinical Photographs" },
+      { label: "Certification", value: "CDE Certificate Included" },
+      { label: "Registration", value: "Separate Add-On Workshop · Available To All Main Session Delegates" },
+    ],
+    footerQuote:
+      "Participants leave not as supporters of one philosophy, but as clinicians capable of selecting the right implant solution for every patient, bone quality, and loading scenario.",
+    badge: "TWO-PIECE Masterclass",
   },
 ];
 
