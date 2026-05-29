@@ -7,7 +7,7 @@ export const config = {
 };
 
 const DEFAULT_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwk2gxOn9oIEBq2yFu-NUOEE8-dWmUOpWFNST_k4j3OxVOSUSUGG5ZarzkXBzH0FYpwJg/exec";
+  "https://script.google.com/macros/s/AKfycbzVgal3N5dGBuftbMjmDXEAC_3x_HbItQFiEm6ImbUxDi7MiS-6BGQbc_y4eze39Dch2g/exec";
 
 const SCRIPT_URL =
   process.env.GOOGLE_SCRIPT_URL || process.env.VITE_GOOGLE_SCRIPT_URL || DEFAULT_SCRIPT_URL;
