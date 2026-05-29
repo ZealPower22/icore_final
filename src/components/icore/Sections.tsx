@@ -185,7 +185,7 @@ export function Principles() {
 /* ---------------- ROI / WHAT YOU GET ---------------- */
 export function WhatYouGet() {
   const items = [
-    { t: "NDC  Certificate", d: "recognized continuing education credits." },
+    { t: "CDE  Certificate", d: "recognized continuing education credits." },
     { t: "Digital Asset Pack", d: "Surgical videos, CBCT scans, prosthetic libraries — yours forever." },
     { t: "Clinical Hands-on Log", d: "Place 5–20 implants under direct mentor supervision." },
     { t: "Indexed Publication", d: "Co-author opportunity on peer-reviewed indexed journals." },
@@ -393,7 +393,7 @@ export function Faculty() {
     {
       title: "Key Note Speakers",
       members: [
-        { n: "Dr. Rajesh Bansal", r: "SENIOR PROF. PROSTHODONTICS , BHU", y: "Senior Implantologist  & Professor, Prosthodontics, Faculty of Dental Sciences, IMS, BHU", image: img("Rajesh Bansal.jpeg") },
+        { n: "Dr. Rajesh Bansal", r: "SENIOR PROF. PROSTHODONTICS , BHU", y: "Senior Implantologist  & Professor, Prosthodontics, Faculty of Dental Sciences, IMS, BHU", image: img("Dr. Rajesh Bansal.jpeg") },
         { n: "Dr. Rajesh Sharma", r: "HOD PEDODONTIST , JDC", y: "Mentor for both Two Piece & Single Piece Implantology, 35 + Publications , Done 1000 + Full Rehabilitation.", image: img("rajesh-sharma.jpeg") },
         { n: "Dr. Johnson Raja James", r: "BDS · MDS · MS(ITALY) · PhD · DIPLOMATEICOI", y: "Implant surgeon & international mentor with 23 years experience in FMR, Pterygoid, & Zygomatic implantology Peri-implant regeneration expert", image: img("Dr. Johnson Raja James.jpeg") },
         { n: "Dr. Dhruv Arora", r: "BDS , MDS Prosthodontics GDC Pondicherry", y: "Internationally acclaimed Prosthodontist & Implant Surgeon with expertise in advanced implantology, full mouth rehabilitation, and peri-implant regeneration. Trained 2500+ dentists globally in implant dentistry.", image: img("Dr. Dhruv Arora.jpeg") },
@@ -425,7 +425,7 @@ export function Faculty() {
         { n: "Dr. Ashish Shrivastava", y: "Senior Dental Surgeon · 35 yrs of clinical experience", image: img("Dr. Ashish Shrivastava.jpeg") },
         { n: "Dr. Manju Shrivastava", y: "Senior Implantologist · 30 years of clinical experience", image: img("Manju Shrivastava.jpeg") },
         { n: "Dr. Sapt Rishi Patel", y: "Oral & Maxillofacial Surgeon · IDA President Alwar", image: img("sapt-rishi-patel.jpeg") },
-        { n: "Dr. Abhaydeep Singh", y: "Bi Cortical Implantologist · 15+ Years", image: img("abhaydeep-singh.jpeg") },
+        { n: "Dr. Abhaydeep Singh", y: "Bi Cortical Implantologist · 10+ Years", image: img("abhaydeep-singh.jpeg") },
         { n: "Dr. Reha Patel", y: "Senior Aesthetic Expert · Chief Co-Ordinator I.C.O.R.E 2026", image: img("reha-patel.jpeg") },
         { n: "Dr. Vishwas Sharma", y: "Bi Cortical Surgeon · Implantologist · Perioperative Care Specialist", image: img("vishwas-sharma.jpeg") },
       ],
@@ -572,8 +572,9 @@ export function Venue() {
   const f = [
     { t: "Auditorium", d: "500+ capacity · Tiered seating · 4K projection", n: "01", img: "/images/Venue/Auditorium.jpeg" },
     { t: "Mega OT", d: "6 surgical chairs · Live broadcast · Sterile zones", n: "02", img: "/images/Venue/Mega OT.jpeg" },
-    { t: "War Room", d: "Case planning · CBCT review · Mentor pods", n: "03", img: "/images/Venue/War room.jpeg" },
-    { t: "Food Court and Trade Fair", d: "Royal Rajasthani cuisine · Networking lounges  • Live product demos ", n: "04", img: "/images/Venue/Trade Fair.jpeg" },
+    { t: "Conference Round Table", d: "100 Seated Capacity · Round Table · Panel Discussion", n: "03", img: "images/Venue/Conference round table .jpeg" },
+    { t: "War Room", d: "Case planning · CBCT review · Mentor pods", n: "04", img: "/images/Venue/War room.jpeg" },
+    { t: "Food Court and Trade Fair", d: "Royal Rajasthani cuisine · Networking lounges  • Live product demos ", n: "05", img: "/images/Venue/Trade Fair.jpeg" },
     
   ];
   return (
@@ -636,7 +637,7 @@ export function Pricing({
       p: "₹29,999",
       price: 29999,
       tagline: "Engaged Learner",
-      features: ["5 hands-on implant placementson live patients", "Lectures by Top 5 Mentors (all 7 days)", "Full 7-day event entry", "Lunches Inc."],
+      features: ["5 hands-on CorticoBasal implant placementson live patients", "Lectures by Top 5 Mentors (all 7 days)", "Full 7-day event entry", "Lunches Inc."],
     },
     {
       id: "specialist",
@@ -747,7 +748,18 @@ export function AddOns({
     { id: "research", t: "Research Package", p: "+ ₹99,999", price: 99999, d: "Manuscript mentorship + indexed publication co-authorship." },
   ];
   return (
-    <SectionShell id="addons" label="Optional" title="Add-On Workshops" dark>
+    <SectionShell
+      id="addons"
+      label={
+        <>
+           Optional
+           <br />
+           Phase 1
+        </>
+     }
+     title="Add-On Workshops"
+     dark
+   >
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {items.map((it, i) => (
           <motion.div
@@ -759,7 +771,15 @@ export function AddOns({
             className="p-7 border border-[var(--gold)]/20 hover:border-[var(--gold)]/60 bg-[var(--burgundy)]/30 transition-all"
           >
             <h3 className="font-display text-lg text-[var(--ivory)]">{it.t}</h3>
-            <div className="mt-3 font-display text-2xl gradient-gold-text">{it.p}</div>
+            <div className="mt-3">
+              <div className="font-display text-2xl gradient-gold-text">
+                {it.p}
+              </div>
+
+              <div className="mt-1 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--gold)]">
+                Early Bird
+              </div>
+            </div>
             <p className="mt-3 text-sm text-[var(--ivory)]/65">{it.d}</p>
             {(() => {
               const currentQty = cartItems.find((item) => item.id === it.id)?.quantity ?? 0;

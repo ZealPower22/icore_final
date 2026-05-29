@@ -363,7 +363,7 @@ function DetailPanel({ data }: { data: MasterclassData }) {
 }
 
 export function MasterclassesSection() {
-  const [active, setActive] = useState<number | null>(0);
+  const [active, setActive] = useState<number | null>(null);
 
   return (
     <div className="relative mx-auto max-w-5xl">

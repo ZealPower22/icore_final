@@ -147,7 +147,7 @@ export function Hero() {
         </motion.a>
 
         <p className="mt-6 text-[12px] font-bold uppercase tracking-[0.4em] text-[var(--ivory)]/50">
-          CPD/CME Certificate · Indexed Research Pathway · World-Record Attempt
+          CDE  Certificate · Indexed Research Pathway · World-Record Attempt
         </p>
       </motion.div>
 
