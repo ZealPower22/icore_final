@@ -746,6 +746,7 @@ export function AddOns({
     { id: "zygomatic", t: "Zygomatic Add-On", p: "+ ₹7,999", price: 7999, d: "Cadaver lab + extended live OT access." },
     { id: "ozone", t: "Ozone Therapy Module", p: "+ ₹3,499", price: 3499, d: "Half-day certification with equipment training." },
     { id: "research", t: "Research Package", p: "+ ₹99,999", price: 99999, d: "Manuscript mentorship + indexed publication co-authorship." },
+    { id: "Two-Piece Compressive Implantology", t: "Two-Piece Compressive Implantology", p: "+ ₹99,999", price: 99999, d: "Manuscript mentorship + indexed publication co-authorship." },
   ];
   return (
     <SectionShell

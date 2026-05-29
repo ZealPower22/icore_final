@@ -4,6 +4,16 @@ import { useState } from "react";
 type HighlightGroup = { title: string; items: string[] };
 type Module = { title: string; items: string[] };
 type FormatRow = { label: string; value: string };
+type PricingTier = {
+  tier: string;
+  implants: string;
+  implantsSub: string;
+  earlyBird: string;
+  note: string;
+  accent: string;
+  priceAccent: string;
+  bg: string;
+};
 
 type MasterclassData = {
   tag: string;
@@ -25,6 +35,7 @@ type MasterclassData = {
   format: FormatRow[];
   footerQuote?: string;
   badge?: string;
+  pricingTiers?: PricingTier[];
 };
 
 const easePremium = [0.22, 1, 0.36, 1] as const;
@@ -163,8 +174,7 @@ const masterclasses: MasterclassData[] = [
     duration: "Day 2 (22 Nov) · Full-Day Workshop",
     description:
       "The debate between two-piece conventional implantology and single-piece corticobasal systems has divided implant dentistry for years. This masterclass brings both approaches together in a unified, evidence-based learning environment. Participants will gain a deep understanding of two-piece implant biomechanics, compressive loading principles, osseointegration protocols, and full-arch rehabilitation strategies through lectures, live demonstrations, and hands-on clinical training.",
-    quote:
-      "I.C.O.R.E 2026 does not take sides — it takes evidence.",
+    quote: "I.C.O.R.E 2026 does not take sides — it takes evidence.",
     speaker: {
       name: "Faculty to be Announced Soon",
       credentials: "ELITE MENTORS · TWO-PIECE & CONVENTIONAL IMPLANT TRADITIONS",
@@ -224,8 +234,40 @@ const masterclasses: MasterclassData[] = [
       { label: "Hands-On Station", value: "CITRC, Jaipur" },
       { label: "Capacity", value: "Limited Seats · Intimate Cohort" },
       { label: "Take-Home", value: "Case Summary Notes + Annotated Clinical Photographs" },
-      { label: "Certification", value: "CDE Certificate Included" },
+      { label: "Certification", value: "C Certificate Included" },
       { label: "Registration", value: "Separate Add-On Workshop · Available To All Main Session Delegates" },
+    ],
+    pricingTiers: [
+      {
+        tier: "TIER 1",
+        implants: "5",
+        implantsSub: "implants on live patients",
+        earlyBird: "₹50,000",
+        note: "Phase pricing TBA",
+        accent: "var(--gold)",
+        priceAccent: "var(--burgundy-deep)",
+        bg: "var(--burgundy)",
+      },
+      {
+        tier: "TIER 2",
+        implants: "8",
+        implantsSub: "implants on live patients",
+        earlyBird: "₹80,000",
+        note: "Phase pricing TBA",
+        accent: "var(--gold)",
+        priceAccent: "var(--burgundy-deep)",
+        bg: "var(--burgundy)",
+      },
+      {
+        tier: "TIER 3 · FULL IMMERSION",
+        implants: "16",
+        implantsSub: "implants + 1 FMR",
+        earlyBird: "₹1,40,000",
+        note: "Phase pricing TBA",
+        accent: "var(--gold)",
+        priceAccent: "var(--burgundy-deep)",
+        bg: "var(--burgundy)",
+      },
     ],
     footerQuote:
       "Participants leave not as supporters of one philosophy, but as clinicians capable of selecting the right implant solution for every patient, bone quality, and loading scenario.",
@@ -287,6 +329,88 @@ function SpeakerBlock({ speaker }: { speaker: MasterclassData["speaker"] }) {
         </p>
       </div>
     </div>
+  );
+}
+
+function PricingTable({ tiers }: { tiers: PricingTier[] }) {
+  return (
+    <section>
+      <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">
+        Participation Tiers & Pricing
+      </h5>
+      <div className="gold-divider my-4 max-w-xs" />
+
+      {/* Header row */}
+      <div className="grid grid-cols-3 overflow-hidden border border-[var(--gold)]/35">
+        {tiers.map((tier) => (
+          <div
+            key={tier.tier}
+            style={{ backgroundColor: tier.bg }}
+            className="border-r border-[var(--gold)]/25 px-3 py-3 text-center last:border-r-0 md:px-5 md:py-4"
+          >
+            <p
+              className="text-[9px] font-semibold uppercase tracking-[0.28em] md:text-[11px]"
+              style={{ color: "var(--gold)" }}
+            >
+              {tier.tier}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Implant count row */}
+      <div className="grid grid-cols-3 overflow-hidden border-x border-b border-[var(--gold)]/35">
+        {tiers.map((tier) => (
+          <div
+            key={tier.tier}
+            style={{ backgroundColor: tier.bg }}
+            className="flex flex-col items-center justify-center border-r border-[var(--gold)]/25 px-3 py-5 text-center last:border-r-0 md:px-5 md:py-7"
+          >
+            <span
+              className="font-display text-5xl font-bold leading-none text-[var(--ivory)] md:text-6xl"
+            >
+              {tier.implants}
+            </span>
+            <span className="mt-2 font-serif text-[11px] italic text-[var(--ivory)]/80 md:text-sm">
+              {tier.implantsSub}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Early bird pricing row */}
+      <div className="grid grid-cols-3 overflow-hidden border-x border-b border-[var(--gold)]/35">
+        {tiers.map((tier) => (
+          <div
+            key={tier.tier}
+            className="flex flex-col items-center justify-center border-r border-[var(--gold)]/20 px-3 py-4 text-center last:border-r-0 bg-[var(--ivory)]/[0.06] md:px-5 md:py-5"
+            style={{ backgroundColor: "rgba(245,235,210,0.07)" }}
+          >
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className="text-[var(--gold)] text-[10px]">★</span>
+              <span className="text-[9px] uppercase tracking-[0.25em] text-[var(--gold)] font-semibold md:text-[10px]">
+                Early Bird
+              </span>
+            </div>
+            <span
+              className="font-display text-xl font-bold leading-tight md:text-2xl"
+              style={{ color: tier.priceAccent === "var(--burgundy-deep)" ? "var(--burgundy)" : tier.priceAccent }}
+            >
+              {/* Use gold-tinted color for all price text to match the dark theme */}
+            </span>
+            <span
+              className="font-display text-xl font-bold leading-tight md:text-2xl"
+              style={{ color: "var(--gold)" }}
+            >
+              {tier.earlyBird}
+            </span>
+            <span className="mt-1 font-serif text-[10px] italic text-[var(--ivory)]/50 md:text-xs">
+              {tier.note}
+            </span>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -405,6 +529,9 @@ function DetailPanel({ data }: { data: MasterclassData }) {
             </div>
           </section>
         )}
+
+        {/* Pricing Tiers Table — rendered before Format & Inclusion */}
+        {data.pricingTiers && <PricingTable tiers={data.pricingTiers} />}
 
         <section>
           <h5 className="font-display text-lg tracking-wide text-[var(--gold)] md:text-xl">
