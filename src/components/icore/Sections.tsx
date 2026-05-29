@@ -637,7 +637,7 @@ export function Pricing({
       p: "₹29,999",
       price: 29999,
       tagline: "Engaged Learner",
-      features: ["5 hands-on CorticoBasal implant placementson live patients", "Lectures by Top 5 Mentors (all 7 days)", "Full 7-day event entry", "Lunches Inc."],
+      features: ["5 hands-on CorticoBasal implant placement on live patients", "Lectures by Top 5 Mentors (all 7 days)", "Full 7-day event entry", "Lunches Inc."],
     },
     {
       id: "specialist",
@@ -646,7 +646,7 @@ export function Pricing({
       price: 49999,
       tagline: "Clinical Path",
       featured: true,
-      features: ["10 implant placements (1 upper + 1 lower quad)", "Lectures by Top 5 Mentors (all 7 days)", "Full 7-day event entry", "Lunches Inc", "Big Gala Dinner Party (food & drinks)", "Shared CBCT radiographic data access"],
+      features: ["10 CorticoBasal implant placement (1 upper + 1 lower quad)", "Lectures by Top 5 Mentors (all 7 days)", "Full 7-day event entry", "Lunches Inc", "Big Gala Dinner Party (food & drinks)", "Shared CBCT radiographic data access"],
     },
     {
       id: "pro-titan",
@@ -683,7 +683,10 @@ export function Pricing({
             <div className="mt-4 flex flex-wrap items-end gap-2">
               <div className="font-display text-4xl gradient-gold-text">{t.p}</div>
               <div className="pb-1 text-[10px] uppercase tracking-[0.16em] text-[var(--ivory)]/65">
-                Excluding 18% GST
+                Excluding 18% GST 
+              </div>
+              <div className="text-[10px] uppercase tracking-[0.16em] text-[var(--ivory)]/65">
+                (25% Increment Price In Phase 1)
               </div>
             </div>
             <div className="gold-divider my-6" />
@@ -746,7 +749,9 @@ export function AddOns({
     { id: "zygomatic", t: "Zygomatic Add-On", p: "+ ₹7,999", price: 7999, d: "Cadaver lab + extended live OT access." },
     { id: "ozone", t: "Ozone Therapy Module", p: "+ ₹3,499", price: 3499, d: "Half-day certification with equipment training." },
     { id: "research", t: "Research Package", p: "+ ₹99,999", price: 99999, d: "Manuscript mentorship + indexed publication co-authorship." },
-    { id: "Two-Piece Compressive Implantology", t: "Two-Piece Compressive Implantology", p: "+ ₹99,999", price: 99999, d: "Manuscript mentorship + indexed publication co-authorship." },
+    { id: "Two-Piece Compressive Implantology Tier 1", t: "Two-Piece Compressive Implantology Tier 1", p: "+ ₹50,000", price: 50000, d: "5 Implants on live patients" },
+    { id: "Two-Piece Compressive Implantology Tier 2", t: "Two-Piece Compressive Implantology Tier 2", p: "+ ₹80,000", price: 80000, d: "8 Implants on live patients" },
+    { id: "Two-Piece Compressive Implantology Tier 3", t: "Two-Piece Compressive Implantology Tier 3", p: "+ ₹1,40,000", price: 140000, d: "16 Implants on live patients + 1 FMR" },
   ];
   return (
     <SectionShell
