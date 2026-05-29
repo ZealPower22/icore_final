@@ -169,7 +169,7 @@ const masterclasses: MasterclassData[] = [
   },
   {
     tag: "D",
-    title: "Two-Piece Compressive Implantology",
+    title: "Two-Piece Hybrid Implantology",
     subtitle: "BRIDGING TWO SCHOOLS OF THOUGHT",
     duration: "Day 2 (22 Nov) · Full-Day Workshop",
     description:
@@ -217,13 +217,13 @@ const masterclasses: MasterclassData[] = [
       },
     ],
     learnItems: [
-      "Two-piece implant biomechanics — compressive vs conventional loading principles",
+      "Two-piece Hybrid implant biomechanics — compressive vs conventional loading principles",
       "Case selection criteria — when to choose two-piece vs single-piece cortical systems",
       "Surgical protocol — crestal approach, osteotomy design, primary stability optimization",
       "Prosthetic connections — abutment engineering, screw torque, anti-rotation concepts",
       "Conventional osseointegration protocols alongside corticobasal immediate functional loading",
       "Complication management — crestal bone loss, peri-implantitis, abutment fracture",
-      "Full-arch rehabilitation using two-piece implant systems",
+      "Full-arch rehabilitation using two-piece Hybrid implant systems",
       "Live patient implant placement under mentor supervision",
     ],
     format: [

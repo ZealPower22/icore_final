@@ -751,7 +751,7 @@ export function AddOns({
     { id: "research", t: "Research Package", p: "+ ₹99,999", price: 99999, d: "Manuscript mentorship + indexed publication co-authorship." },
     { id: "Two-Piece Hybrid Implantology Tier 1", t: "Two-Piece Hybrid Implantology Tier 1", p: "+ ₹50,000", price: 50000, d: "5 Implants on live patients" },
     { id: "Two-Piece Hybrid Implantology Tier 2", t: "Two-Piece Hybrid Implantology Tier 2", p: "+ ₹80,000", price: 80000, d: "8 Implants on live patients" },
-    { id: "Two-Piece Hybrid Implantology Tier 3", t: "Two-Piece Hybrid Implantology Tier 3", p: "+ ₹1,40,000", price: 140000, d: "16 Implants on live patients + 1 FMR" },
+    { id: "Two-Piece Hybrid Implantology Tier 3", t: "Two-Piece Hybrid Implantology Tier 3", p: "+ ₹1,40,000", price: 140000, d: "16 Implants on live patients / 1 FMR" },
   ];
   return (
     <SectionShell
